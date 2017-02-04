@@ -1,0 +1,29 @@
+
+namespace = mafoe
+
+# Gain manpower
+# positive factors:
+# 	- terrain (
+
+province_event = {
+	id = mafoe.001
+	title = "mafoe001title"
+	desc = "mafoe001desc"
+	picture = RELIGION_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		has_terrain = marsh
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 12
+	}
+
+	option = {
+		name = "mafoe001option"
+		add_base_manpower = 1
+	}
+}
