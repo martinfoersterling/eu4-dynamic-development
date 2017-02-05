@@ -6,6 +6,7 @@ namespace = mafoe_gain_dev
 # 	- terrain allowing high population: grasslands, farmlands
 #   - being the capital
 #   - has government or taxation buildings (the more, the better)
+#   - higher development efficiency and development cost
 #
 # negative factors: anything negative to population growth or stability
 #   - terrain: mountain, desert, marsh, highlands, jungle, coastal_desert
@@ -13,8 +14,8 @@ namespace = mafoe_gain_dev
 #   - is looted
 #   - is a colony
 #   - unrest (the higher, the worse)
-#   - different religion
-#   - different culture
+#   - non-state religion
+#   - non-accepted culture
 
 province_event = {
 	id = mafoe_gain_dev.1
@@ -35,13 +36,13 @@ province_event = {
 
         # faster in the capital
 		modifier = {
-			factor = 0.5
+			factor = 0.95
             is_capital = yes
 		}
 
         # faster in favourable terrain
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			OR = {
 				has_terrain = grasslands
 				has_terrain = farmlands
@@ -50,7 +51,7 @@ province_event = {
 
         # slower in unsuitable terrain
 		modifier = {
-			factor = 1.15
+			factor = 1.05
 			OR = {
 				has_terrain = jungle
 				has_terrain = marsh
@@ -59,7 +60,7 @@ province_event = {
 
         # slower in hostile terrain
 		modifier = {
-			factor = 1.5
+			factor = 1.2
 			OR = {
 				has_terrain = glacier
 				has_terrain = mountain
@@ -70,7 +71,7 @@ province_event = {
 
         # slower in unsuitable climate
 		modifier = {
-			factor = 1.5
+			factor = 1.2
 			OR = {
 				has_climate = arid
 				has_climate = tropical
@@ -79,52 +80,52 @@ province_event = {
 
         # slower in hostile terrain
 		modifier = {
-			factor = 2
+			factor = 1.2
 			has_climate = arctic
 		}
         # slower with more unrest
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 2
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 4
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 6
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 8
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 10
 		}
 
         # faster with tax or government buildings
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			has_building = temple
 		}
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			has_building = cathedral
 		}
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			has_building = courthouse
 		}
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			has_building = town_hall
 		}
 
 		# slower when looted or blockaded
 		modifier = {
-			factor = 5
+			factor = 1.2
             OR = {
                 is_looted = yes
                 is_blockaded = yes
@@ -133,13 +134,13 @@ province_event = {
 
 		# slower when colony
 		modifier = {
-			factor = 5
+			factor = 2
             is_colony = yes
 		}
 
 		# faster when tradegood is wheat, fish, salt or slaves
 		modifier = {
-			factor = 5
+			factor = 0.95
 			OR = {
                 trade_goods = grain
                 trade_goods = fish
@@ -149,7 +150,7 @@ province_event = {
 
 		# faster when taxation boost is active
 		modifier = {
-			factor = 5
+			factor = 0.95
 			owner = {
     			has_country_modifier = tax_growth_boosted
 			}
@@ -158,44 +159,97 @@ province_event = {
 		# faster with higher development efficiency
 		# has 3 tiers from adm tech, each is 0.1 or 10%
 		modifier = {
-			factor = 2
+			factor = 0.95
 			is_variable_equal = { which = development_efficiency value = 0.3 }
 		}
 		modifier = {
-			factor = 2
+			factor = 0.95
 			is_variable_equal = { which = development_efficiency value = 0.2 }
 		}
 		modifier = {
-			factor = 2
+			factor = 0.95
 			is_variable_equal = { which = development_efficiency value = 0.1 }
 		}
 
-        # faster with higher local development cost
-        # -20% from university
-        # -5% through from aspect
-        # -10% from custom idea
-        # +50% from tribe disaster
-        # +10% or -10% from burgher estate
-        # -X% from harbor, center of trade, etc
-        # -X% from events
-        # -X% from governments
-        # -20% from economic ideas
-        # -5-10% from national ideas
-        # -X% from institutions, policies, parliament issues, buddhism, terrain, difficulty, being subject or primitive, trade goods,
+        # faster with lower local development cost
         modifier = {
-            factor = 5
+            factor = 0.98
             has_local_modifier_value = {
                 which = local_development_cost
-                value = 0.15
+                value = -0.20
             }
         }
         modifier = {
-            factor = 5
-            has_global_modifier_value = {
-                which = development_cost
-                value = 0.15
+            factor = 0.98
+            has_local_modifier_value = {
+                which = local_development_cost
+                value = -0.15
             }
         }
+        modifier = {
+            factor = 0.98
+            has_local_modifier_value = {
+                which = local_development_cost
+                value = -0.10
+            }
+        }
+        modifier = {
+            factor = 0.98
+            has_local_modifier_value = {
+                which = local_development_cost
+                value = -0.05
+            }
+        }
+
+        # faster with lower development cost
+        modifier = {
+            factor = 0.98
+            owner {
+                has_global_modifier_value = {
+                    which = development_cost
+                    value = -0.2
+                }
+            }
+        }
+        modifier = {
+            factor = 0.98
+            owner {
+                has_global_modifier_value = {
+                    which = development_cost
+                    value = -0.15
+                }
+            }
+        }
+        modifier = {
+            factor = 0.98
+            owner {
+                has_global_modifier_value = {
+                    which = development_cost
+                    value = -0.1
+                }
+            }
+        }
+        modifier = {
+            factor = 0.98
+            owner {
+                has_global_modifier_value = {
+                    which = development_cost
+                    value = -0.05
+                }
+            }
+        }
+
+        # slower with non accepted culture
+		modifier = {
+			factor = 1.05
+            has_owner_accepted_culture = no
+		}
+
+        # slower with religion other than state religion
+		modifier = {
+			factor = 1.05
+			has_owner_religion = no
+		}
 	}
 
 	option = {
