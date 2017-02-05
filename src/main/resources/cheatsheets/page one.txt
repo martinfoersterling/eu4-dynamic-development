@@ -1,0 +1,64 @@
+
+# Terrain
+
+grasslands
+hills
+mountain
+desert
+marsh
+farmlands
+forest
+ocean
+coastline
+savannah
+drylands
+highlands
+jungle
+woods
+coastal_desert
+
+# interesting conditions
+
+has_owner_accepted_culture = yes
+has_owner_religion = yes
+has_seat_in_parliament
+has_siege
+is_blockaded
+is_looted
+gold = 5 #min 5 goldprovincen im land
+corruption
+
+has_global_modifier_value = {
+	which = cavalry_power
+	value = 0.5
+}
+
+is_bankrupt
+army_tradition
+navy_tradition
+is_at_war
+luck
+manpower_percentage
+national_focus
+num_of_colonial_subjects
+num_of_colonies
+num_of_rebel_armies
+num_of_revolts
+uses_piety + piety
+production_efficiency
+production_leader
+religious_unity
+stability
+trade_efficiency
+trading_bonus
+trading_part
+development_cost
+local_development_cost
+development_efficiency
+
+
+# für local development cost?
+has_local_modifier_value = {
+	which = local_production_efficiency
+	value = 0.15
+}

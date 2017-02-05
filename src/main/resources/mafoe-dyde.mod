@@ -1,5 +1,5 @@
-name="Dynamic Developemnt"
-        archive="mod/mafoe-dyde"
+name="Dynamic Development"
+        path="mod/mafoe-dyde"
         tags={
         "gameplay"
         }

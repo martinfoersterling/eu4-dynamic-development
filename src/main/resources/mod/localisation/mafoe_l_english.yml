@@ -1,0 +1,27 @@
+﻿l_english:
+ mafoe.gain_manpower.title:0 "Manpower gained in $PROVINCENAME$"
+ mafoe.gain_manpower.desc:0 "As the population in [Root.GetName] grows, the number of recruitable men increases."
+ mafoe.gain_manpower.option:0 "More armies, more honor"
+
+ mafoe.gain_tax.title:0 "Tax gained in [Root.GetName]"
+ mafoe.gain_tax.desc:0 "As the population in [Root.GetName] thrives, the tax collectors report rising income."
+ mafoe.gain_tax.option:0 "More money, less problems"
+
+ mafoe.gain_production.title:0 "Production gained in [Root.GetName]"
+ mafoe.gain_production.desc:0 "As the commercial factors in [Root.GetName] improve, the production of goods increases."
+ mafoe.gain_production.option:0 "Ka-ching!"
+
+ boost_tax_growth_title:0 "Boost taxation growth"
+ boost_tax_growth_desc:0 "Increases the chance for taxation growth in all owned provinces for 5 years."
+ boost_production_growth_title:0 "Boost production growth"
+ boost_production_growth_desc:0 "Increases the chance for production growth in all owned provinces for 5 years."
+ boost_manpower_growth_title:0 "Boost manpower growth"
+ boost_manpower_growth_desc:0 "Increases the chance for manpower growth in all owned provinces for 5 years."
+
+ tax_growth_boosted:0 "Taxation growth boosted"
+ desc_tax_growth_boosted:0 "Increases the chance for taxation growth in all provinces for 5 years"
+ production_growth_boosted:0 "Production growth boosted"
+ desc_production_growth_boosted:0 "Increases the chance for production growth in all provinces for 5 years"
+ manpower_growth_boosted:0 "Manpower growth boosted"
+ desc_manpower_growth_boosted:0 "Increases the chance for manpower growth in all provinces for 5 years"
+

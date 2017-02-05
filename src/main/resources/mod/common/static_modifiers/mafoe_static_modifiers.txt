@@ -1,0 +1,25 @@
+
+
+development = {
+	allowed_num_of_buildings = 0.01
+	supply_limit_modifier = 0.002
+	local_missionary_strength = -0.0001
+	land_forcelimit	= 0.01			# special case, affected by autonomy
+	naval_forcelimit = 0.01			# special case, affected by autonomy & set to 0 by code if not port
+	local_sailors = 2			# special case, affected by autonomy & set to 0 by code if not port
+	province_trade_power_value = 0.02
+}
+
+provincial_tax_income = {
+	regiment_recruit_speed = -0.001
+}
+
+provincial_production_size = {
+	trade_goods_size = 0.02
+	ship_recruit_speed = -0.001
+}
+
+manpower = {
+	garrison_growth = 0.001					#0.1% increase from manpower.
+}
+

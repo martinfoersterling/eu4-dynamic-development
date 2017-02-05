@@ -1,0 +1,99 @@
+
+# I'm not happy with these decisions because what logic is behind investing diplomatic capacity to boost production growth?
+# Yet in vanilla, a country can spend the according mana to increase development, and without that possibility it might happen
+# that the country sits on mana without a way to spend it, since I've made manual development prohibitively expensive.
+
+
+country_decisions = {
+
+    # Boost tax growth by spending admin points
+    # provides a way for nations to get rid of that annoying paper mana
+    # Can be taken every 5 years, but only if the ruler is a decent administrator
+
+	boost_tax_growth = {
+		major = yes
+		potential = {
+		}
+		allow = {
+			adm = 3
+			adm_power = 400
+			NOT = { has_country_modifier = tax_growth_boosted }
+		}
+		effect = {
+			add_country_modifier = {
+				name = "tax_growth_boosted"
+				duration = 1825                 #5 years
+			}
+			add_adm_power = -400
+		}
+		ai_will_do = {
+			factor = 0.4
+			modifier = {
+				factor = 2
+				adm_power = 800
+			}
+		}
+		ai_importance = 50
+	}
+
+    # Boost production growth by spending diplomatic points
+    # provides a way for nations to get rid of that annoying bird mana
+    # Can be taken every 5 years, but only if the ruler is a decent diplomat
+
+	boost_production_growth = {
+		major = yes
+		potential = {
+		}
+		allow = {
+			dip = 3
+			dip_power = 400
+			NOT = { has_country_modifier = production_growth_boosted }
+		}
+		effect = {
+			add_country_modifier = {
+				name = "production_growth_boosted"
+				duration = 1825                 #5 years
+			}
+			add_dip_power = -400
+		}
+		ai_will_do = {
+			factor = 0.4
+			modifier = {
+				factor = 2
+				dip_power = 800
+			}
+		}
+		ai_importance = 50
+	}
+
+    # Boost manpower growth by spending military points
+    # provides a way for nations to get rid of that annoying sword mana
+    # Can be taken every 5 years, but only if the ruler is military minded
+
+	boost_manpower_growth = {
+		major = yes
+		potential = {
+		}
+		allow = {
+			mil = 3
+			mil_power = 400
+			NOT = { has_country_modifier = manpower_growth_boosted }
+		}
+		effect = {
+			add_country_modifier = {
+				name = "manpower_growth_boosted"
+				duration = 1825                 #5 years
+			}
+			add_mil_power = -400
+		}
+		ai_will_do = {
+			factor = 0.4
+			modifier = {
+				factor = 2
+				mil_power = 800
+			}
+		}
+		ai_importance = 50
+	}
+
+}
