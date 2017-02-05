@@ -32,7 +32,7 @@ province_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 12
+		months = 120
 
         # faster in the capital
 		modifier = {
@@ -78,11 +78,18 @@ province_event = {
 			}
 		}
 
-        # slower in hostile terrain
+        # slower in hostile climate
 		modifier = {
 			factor = 1.2
 			has_climate = arctic
 		}
+
+        # slower on single province islands
+        modifier = {
+            factor = 1.2
+            island = yes
+        }
+
         # slower with more unrest
 		modifier = {
 			factor = 1.1
@@ -204,7 +211,7 @@ province_event = {
         # faster with lower development cost
         modifier = {
             factor = 0.98
-            owner {
+            owner = {
                 has_global_modifier_value = {
                     which = development_cost
                     value = -0.2
@@ -213,7 +220,7 @@ province_event = {
         }
         modifier = {
             factor = 0.98
-            owner {
+            owner = {
                 has_global_modifier_value = {
                     which = development_cost
                     value = -0.15
@@ -222,7 +229,7 @@ province_event = {
         }
         modifier = {
             factor = 0.98
-            owner {
+            owner = {
                 has_global_modifier_value = {
                     which = development_cost
                     value = -0.1
@@ -231,7 +238,7 @@ province_event = {
         }
         modifier = {
             factor = 0.98
-            owner {
+            owner = {
                 has_global_modifier_value = {
                     which = development_cost
                     value = -0.05
@@ -254,9 +261,7 @@ province_event = {
 
 	option = {
 		name = "mafoe.gain_tax.option"
-		add_base_tax = 377
-		add_base_manpower = 377
-		add_base_production = 377
+		add_base_tax = 1
 	}
 }
 
@@ -291,17 +296,17 @@ province_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 12
+		months = 120
 
         # faster in the capital
 		modifier = {
-			factor = 0.5
+			factor = 0.95
             is_capital = yes
 		}
 
         # faster in favourable terrain
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			OR = {
 				has_terrain = grasslands
 				has_terrain = farmlands
@@ -310,7 +315,7 @@ province_event = {
 
         # slower in unsuitable terrain
 		modifier = {
-			factor = 1.15
+			factor = 1.05
 			OR = {
 				has_terrain = jungle
 				has_terrain = marsh
@@ -319,7 +324,7 @@ province_event = {
 
         # slower in hostile terrain
 		modifier = {
-			factor = 1.5
+			factor = 1.2
 			OR = {
 				has_terrain = glacier
 				has_terrain = mountain
@@ -330,101 +335,117 @@ province_event = {
 
         # slower in unsuitable climate
 		modifier = {
-			factor = 1.5
+			factor = 1.2
 			OR = {
 				has_climate = arid
 				has_climate = tropical
 			}
 		}
 
-        # slower in hostile terrain
+        # slower in hostile climate
 		modifier = {
-			factor = 2
+			factor = 1.2
 			has_climate = arctic
 		}
+
+        # slower on single province islands
 		modifier = {
-			factor = 2
-			has_winter = severe_winter
+			factor = 1.2
+			island = yes
+		}
+
+        # faster in center of trade
+		modifier = {
+			factor = 0.9
+			has_province_modifier = center_of_trade_modifier
+		}
+
+        # faster in important trade provinces
+		modifier = {
+			factor = 0.95
+			OR = {
+                   has_province_modifier = important_natural_harbor
+                   has_province_modifier = inland_center_of_trade_modifier
+            }
 		}
 
         # slower with more unrest
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 2
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 4
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 6
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 8
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 10
 		}
 
-        # faster with tax or government buildings
+        # faster with production, trade and manufactory buildings
 		modifier = {
 			factor = 0.9
-			has_building = temple
+			has_building = workshop
 		}
 		modifier = {
 			factor = 0.9
-			has_building = cathedral
+			has_building = counting_house
 		}
 		modifier = {
 			factor = 0.9
-			has_building = courthouse
+			has_building = marketplace
 		}
 		modifier = {
 			factor = 0.9
-			has_building = town_hall
+			has_building = trade_depot
+		}
+		modifier = {
+			factor = 0.9
+			has_building = stock_exchange
+		}
+		modifier = {
+			factor = 0.8
+			has_building = wharf
+		}
+		modifier = {
+			factor = 0.8
+			has_building = weapons
+		}
+		modifier = {
+			factor = 0.8
+			has_building = textile
+		}
+		modifier = {
+			factor = 0.8
+			has_building = plantations
+		}
+		modifier = {
+			factor = 0.8
+			has_building = tradecompany
 		}
 
-        # faster with forts
+		# slower when looted or blockaded
 		modifier = {
-			factor = 0.9
-            has_building = fort_15th
-		}
-		modifier = {
-			factor = 0.9
-            has_building = fort_16th
-		}
-		modifier = {
-			factor = 0.9
-            has_building = fort_17th
-		}
-		modifier = {
-			factor = 0.9
-            has_building = fort_18th
-		}
-
-		# slower when looted
-		modifier = {
-			factor = 5
-            is_looted = yes
+			factor = 1.2
+            OR = {
+                is_looted = yes
+                is_blockaded = yes
+            }
 		}
 
 		# slower when colony
 		modifier = {
-			factor = 5
+			factor = 2
             is_colony = yes
-		}
-
-		# faster when tradegood is wheat, fish, salt or slaves
-		modifier = {
-			factor = 5
-			OR = {
-                trade_goods = grain
-                trade_goods = fish
-                trade_goods = salt
-            }
 		}
 	}
 
@@ -468,18 +489,18 @@ province_event = {
     }
 
 	mean_time_to_happen = {
-		months = 12
+		months = 120
 
         # faster in the capital
 		modifier = {
-			factor = 0.5
+			factor = 0.95
             is_capital = yes
 		}
 
 
         # faster in favourable terrain
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			OR = {
 				has_terrain = grasslands
 				has_terrain = farmlands
@@ -488,7 +509,7 @@ province_event = {
 
         # slower in unsuitable terrain
 		modifier = {
-			factor = 1.15
+			factor = 1.05
 			OR = {
 				has_terrain = jungle
 				has_terrain = marsh
@@ -497,7 +518,7 @@ province_event = {
 
         # slower in hostile terrain
 		modifier = {
-			factor = 1.5
+			factor = 1.2
 			OR = {
 				has_terrain = glacier
 				has_terrain = mountain
@@ -508,63 +529,44 @@ province_event = {
 
         # slower in unsuitable climate
 		modifier = {
-			factor = 1.5
+			factor = 1.2
 			OR = {
 				has_climate = arid
 				has_climate = tropical
 			}
 		}
 
-        # slower on single province islands
+        # slower in hostile climate
 		modifier = {
-			factor = 2
-			island = yes
-		}
-
-        # slower in hostile terrain
-		modifier = {
-			factor = 2
+			factor = 1.2
 			has_climate = arctic
 		}
-		modifier = {
-			factor = 2
-			has_winter = severe_winter
-		}
 
-        # faster in center of trade
+        # slower on single province islands
 		modifier = {
-			factor = 0.9
-			has_province_modifier = center_of_trade_modifier
-		}
-
-        # faster in important trade provinces
-		modifier = {
-			factor = 0.95
-			OR = {
-                   has_province_modifier = important_natural_harbor
-                   has_province_modifier = inland_center_of_trade_modifier
-            }
+			factor = 1.2
+			island = yes
 		}
 
         # slower with more unrest
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 2
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 4
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 6
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 8
 		}
 		modifier = {
-			factor = 2
+			factor = 1.1
 			unrest = 10
 		}
 
@@ -620,9 +622,9 @@ province_event = {
             has_building = fort_18th
 		}
 
-		# slower when looted
+		# slower when looted or blockaded
 		modifier = {
-	        factor = 5
+			factor = 1.2
             OR = {
                 is_looted = yes
                 is_blockaded = yes
@@ -631,18 +633,8 @@ province_event = {
 
 		# slower when colony
 		modifier = {
-			factor = 5
+			factor = 2
             is_colony = yes
-		}
-
-		# faster when tradegood is wheat, fish, salt or slaves
-		modifier = {
-			factor = 5
-			OR = {
-                trade_goods = grain
-                trade_goods = fish
-                trade_goods = salt
-            }
 		}
 	}
 
