@@ -1,9 +1,0 @@
-
-tax_growth_boosted = {
-}
-
-production_growth_boosted = {
-}
-
-manpower_growth_boosted = {
-}

@@ -25,3 +25,9 @@
  manpower_growth_boosted:0 "Manpower growth boosted"
  desc_manpower_growth_boosted:0 "Increases the chance for manpower growth in all provinces for 5 years"
 
+ mafoe.terraform.forest.to.grassland.title:0 "Forest cleared in [Root.GetName]"
+ mafoe.terraform.forest.to.grassland.desc:0 "Rising development and growing settlements in [Root.GetName] have led to clearing the forests. Where once dark forests stood, fertile grasslands now stretch as far as the eye can see."
+ mafoe.terraform.forest.to.grassland.option:0 "Praise be!"
+
+ forest_clearance:0 "Forest cleared"
+ desc_forest_clearance:0 "Forest has been cleared in this province to make room for lush grasslands"
