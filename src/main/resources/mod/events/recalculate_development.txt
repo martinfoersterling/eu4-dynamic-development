@@ -1,0 +1,20 @@
+
+namespace = mafoe_recalculate_development
+
+#
+
+country_event = {
+	id = mafoe_recalculate_development.1
+	title = "wont_translate.title"
+	desc = "wont_translate.desc"
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "wont_translate"
+        #todo
+
+	}
+}

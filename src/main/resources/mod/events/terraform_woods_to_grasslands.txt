@@ -1,0 +1,57 @@
+
+namespace = mafoe_terraform_province_one
+
+province_event = {
+	id = mafoe_terraform_province_one.1
+	title = "mafoe.terraform.forest.to.grassland.title"
+	desc = "mafoe.terraform.forest.to.grassland.desc"
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	hidden = no
+	is_triggered_only = yes
+
+	mean_time_to_happen = {
+		months = 120 #10 years
+
+        modifier = {
+            factor = 1.3
+            development = 30
+        }
+        modifier = {
+            factor = 1.2
+            development = 40
+        }
+        modifier = {
+            factor = 1.1
+            development = 50
+        }
+        modifier = {
+            factor = 1
+            development = 60
+        }
+        modifier = {
+            factor = 0.9
+            development = 70
+        }
+        modifier = {
+            factor = 0.8
+            development = 80
+        }
+        modifier = {
+            factor = 0.7
+            development = 90
+        }
+        modifier = {
+            factor = 0.6
+            development = 100
+        }
+    }
+
+	option = {
+		name = "mafoe.terraform.forest.to.grassland.option"
+        add_permanent_province_modifier = {
+                name = forest_clearance
+                duration = -1
+        }
+    }
+}

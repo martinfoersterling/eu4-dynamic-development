@@ -26,8 +26,40 @@
  desc_manpower_growth_boosted:0 "Increases the chance for manpower growth in all provinces for 5 years"
 
  mafoe.terraform.forest.to.grassland.title:0 "Forest cleared in [Root.GetName]"
- mafoe.terraform.forest.to.grassland.desc:0 "Rising development and growing settlements in [Root.GetName] have led to clearing the forests. Where once dark forests stood, fertile grasslands now stretch as far as the eye can see."
+ mafoe.terraform.forest.to.grassland.desc:0 "An influx of settlers and growing settlements in [Root.GetName] have led to clearing most of the woods. Where once dark forests stood, fertile grasslands now stretch as far as the eye can see."
  mafoe.terraform.forest.to.grassland.option:0 "Praise be!"
 
+ mafoe.terraform.coastline.to.grassland.title:0 "Coastline made arable in [Root.GetName]"
+ mafoe.terraform.coastline.to.grassland.desc:0 "The coast of [Root.GetName], by planting trees and crops, has been greatly improved by the industrious people there. It is time for this underappreciated jewel to shine."
+ mafoe.terraform.coastline.to.grassland.option:0 "Praise be!"
+
+ mafoe.terraform.marsh.to.grassland.title:0 "Marshes drained in [Root.GetName]"
+ mafoe.terraform.marsh.to.grassland.desc:0 "Digging trenches below water level, the swamps in [Root.GetName] have been drained of their miasmatic water. Fertile grasslands have replaced the unhealthy bogs, and new settlers take advantage of the reclaimed land."
+ mafoe.terraform.marsh.to.grassland.option:0 "Praise be!"
+
+ mafoe.terraform.grassland.to.farmlands.title:0 "Abundant farming in [Root.GetName]"
+ mafoe.terraform.grassland.to.farmlands.desc:0 "Intense agriculture in [Root.GetName] has lead to a wealth of farmlands. Where once lush grasslands lay, farms and fields and hamlets spring up under the golden sun."
+ mafoe.terraform.grassland.to.farmlands.option:0 "Praise be!"
+
+ mafoe.terraform.jungle.to.savannah.title:0 "Slash and burn in [Root.GetName]"
+ mafoe.terraform.jungle.to.savannah.desc:0 "Controlled fires in the dense jungle of [Root.GetName] have created fertile farmlands - briefly. The soil soon becomes infertile and needs to recover, reverting to jungle."
+ mafoe.terraform.jungle.to.savannah.option:0 "Praise be?"
+
+ land_reclamation:0 "Swamps drained"
+ desc_land_reclamation:0 "This once swampy land has been drained and turned into lush grassland"
+
  forest_clearance:0 "Forest cleared"
- desc_forest_clearance:0 "Forest has been cleared in this province to make room for lush grasslands"
+ desc_forest_clearance:0 "Forest has been cleared in this province to make room for lush grassland"
+
+ farms:0 "Abundant farms"
+ desc_farms:0 "This grassland have been settled and brought to bloom with fields"
+
+ coastline_improved:0 "Coastline improved"
+ desc_coastline_improved:0 "An intricate network of fields and forests adorns this formerly rough coastline"
+
+ slash_and_burn:0 "Slash and burn"
+ desc_slash_and_burn:0 "These jungles are made into fertile land by slash and burn before reverting into jungle while the soil recovers"
+
+ wont_translate.title:0 "No translation"
+ wont_translate.desc:0 "No translation"
+ wont_translate:0 "No translation"

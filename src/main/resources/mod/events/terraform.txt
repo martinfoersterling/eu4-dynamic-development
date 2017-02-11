@@ -1,0 +1,110 @@
+
+namespace = mafoe_terraform
+
+# If the development is high enough, man-made improvements can a modify a province. Since the engine doesn't allow
+# changing a province's terrain, province modifiers must do.
+#
+# Possible changes:
+# forest / woods -> grasslands
+# grasslands -> farmlands
+# marsh -> grasslands
+# coastline -> grasslands
+# jungle (by slashing & burning) -> farmlands (after 5 years) -> savannah
+#
+# new "irrigation" modifier for desert & drylands & coastal desert
+
+country_event = {
+	id = mafoe_terraform.1
+	title = "wont_translate.title"
+	desc = "wont_translate.desc"
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	hidden = no
+	is_triggered_only = yes
+
+	option = {
+		name = "mafoe.terraform.forest.to.grassland.option"
+
+        every_owned_province = {
+            limit = {
+                development = 20
+                NOR = {
+                    has_province_modifier = forest_clearance
+                    has_climate = arctic
+                }
+            }
+
+            # grasslands to farmlands is easy
+            if = {
+                limit = {
+                    OR = {
+                        has_terrain = grasslands
+                        has_province_modifier = forest_clearance
+                        has_province_modifier = land_reclamation
+                        has_province_modifier = coastline_improved
+                    }
+                    NOT = { has_province_modifier = farms }
+                    NOR = {
+                        has_climate = arctic
+                        has_climate = tropical
+                    }
+                }
+                province_event = { id = mafoe_terraform_province_two.1 days = 1 }
+            }
+
+            # forest to grasslands is easy
+            if = {
+                limit = {
+                    OR = {
+                        has_terrain = forest
+                        has_terrain = woods
+                    }
+                    NOT = { has_province_modifier = forest_clearance }
+                    NOR = {
+                        has_climate = arctic
+                        has_climate = tropical
+                    }
+                }
+                province_event = { id = mafoe_terraform_province_one.1 days = 1 }
+            }
+
+            # coastline to grasslands is so so
+            if = {
+                limit = {
+                    has_terrain = coastline
+                    NOT = { has_province_modifier = coastline_improved }
+                    NOR = {
+                        has_climate = arctic
+                        has_climate = tropical
+                    }
+                }
+                province_event = { id = mafoe_terraform_province_four.1 days = 1 }
+            }
+
+            # marsh to grasslands is tough
+            if = {
+                limit = {
+                    has_terrain = marsh
+                    NOT = { has_province_modifier = land_reclamation }
+                    NOR = {
+                        has_climate = arctic
+                        has_climate = tropical
+                    }
+                }
+                province_event = { id = mafoe_terraform_province_three.1 days = 1 }
+            }
+
+            # jungle to savannah by slashing and burning
+            # this makes the lands very fertile for a short time, but after a few years the soil becomes infertile
+            # recovery takes decades, so we assume the average between short, very fertile and longer, infertile
+            # episodes makes the land behave like savannah
+            if = {
+                limit = {
+                    has_terrain = jungle
+                    NOT = { has_province_modifier = slash_and_burn }
+                }
+                province_event = { id = mafoe_terraform_province_five.1 days = 1 }
+            }
+        }
+	}
+}

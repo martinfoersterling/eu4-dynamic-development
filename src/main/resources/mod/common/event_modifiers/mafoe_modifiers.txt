@@ -13,3 +13,25 @@ forest_clearance = {
     supply_limit = 0.333333333333333333333333333
     allowed_num_of_buildings = 1
 }
+
+farms = {
+    local_development_cost = -0.05
+    supply_limit = 0.333333333333333333333333333
+}
+
+land_reclamation = {
+    local_development_cost = -0.25
+    supply_limit = 0.666666666666666666666666666
+    allowed_num_of_buildings = 1
+}
+
+coastline_improved = {
+    local_development_cost = -0.25
+    supply_limit = 0.333333333333333333333333333
+    allowed_num_of_buildings = 1
+}
+
+slash_and_burn = {
+    local_development_cost = -0.2
+    supply_limit = 0.166666666666666666666666666
+}
