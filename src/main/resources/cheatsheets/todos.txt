@@ -1,0 +1,4 @@
+
+- desert gaining dev too fast
+- decent icons for province modifiers
+- balancing terraforming

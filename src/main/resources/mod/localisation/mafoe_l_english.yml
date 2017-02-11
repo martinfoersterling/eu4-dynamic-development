@@ -31,19 +31,33 @@
 
  mafoe.terraform.coastline.to.grassland.title:0 "Coastline made arable in [Root.GetName]"
  mafoe.terraform.coastline.to.grassland.desc:0 "The coast of [Root.GetName], by planting trees and crops, has been greatly improved by the industrious people there. It is time for this underappreciated jewel to shine."
- mafoe.terraform.coastline.to.grassland.option:0 "Praise be!"
+ mafoe.terraform.coastline.to.grassland.option:0 "Glory everlasting!"
 
  mafoe.terraform.marsh.to.grassland.title:0 "Marshes drained in [Root.GetName]"
  mafoe.terraform.marsh.to.grassland.desc:0 "Digging trenches below water level, the swamps in [Root.GetName] have been drained of their miasmatic water. Fertile grasslands have replaced the unhealthy bogs, and new settlers take advantage of the reclaimed land."
- mafoe.terraform.marsh.to.grassland.option:0 "Praise be!"
+ mafoe.terraform.marsh.to.grassland.option:0 "Caesar non supra grammatico!"
 
  mafoe.terraform.grassland.to.farmlands.title:0 "Abundant farming in [Root.GetName]"
  mafoe.terraform.grassland.to.farmlands.desc:0 "Intense agriculture in [Root.GetName] has lead to a wealth of farmlands. Where once lush grasslands lay, farms and fields and hamlets spring up under the golden sun."
- mafoe.terraform.grassland.to.farmlands.option:0 "Praise be!"
+ mafoe.terraform.grassland.to.farmlands.option:0 "Praise the Lord!"
 
  mafoe.terraform.jungle.to.savannah.title:0 "Slash and burn in [Root.GetName]"
  mafoe.terraform.jungle.to.savannah.desc:0 "Controlled fires in the dense jungle of [Root.GetName] have created fertile farmlands - briefly. The soil soon becomes infertile and needs to recover, reverting to jungle."
  mafoe.terraform.jungle.to.savannah.option:0 "Praise be?"
+
+ mafoe.terraform.irrigation.title:0 "Irrigation canals in [Root.GetName]"
+ mafoe.terraform.irrigation.desc:0 "A great irrigation project has finished in [Root.GetName], making fertile the former desert around the irrigation canals."
+ mafoe.terraform.irrigation.option:0 "Aqua vitae!"
+
+ mafoe.terraform.terrace.title:0 "Terracing in [Root.GetName]"
+ mafoe.terraform.terrace.desc:0 "Terraces have been cut into the hillsides in [Root.GetName], increasing the yield of small fields dotting the slopes."
+ mafoe.terraform.terrace.option:0 "Flectere si nequeo superos, Acheronta movebo!"
+
+ terrace:0 "Terracing"
+ desc_terrace:0 "Terraces have been cut into the slopes and hillsides, leading to more effective farming"
+
+ irrigation:0 "Irrigation canals"
+ desc_irrigation:0 "After carefully diverting water from streams and lakes, fields and orchards prosper around the canals"
 
  land_reclamation:0 "Swamps drained"
  desc_land_reclamation:0 "This once swampy land has been drained and turned into lush grassland"

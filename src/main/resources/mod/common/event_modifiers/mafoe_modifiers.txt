@@ -12,6 +12,7 @@ forest_clearance = {
     local_development_cost = -0.15
     supply_limit = 0.333333333333333333333333333
     allowed_num_of_buildings = 1
+    picture = "rr_girondists_influence"
 }
 
 farms = {
@@ -31,7 +32,23 @@ coastline_improved = {
     allowed_num_of_buildings = 1
 }
 
+hills_improved = {
+    local_development_cost = -0.25
+    supply_limit = 0.333333333333333333333333333
+    allowed_num_of_buildings = 1
+}
+
 slash_and_burn = {
     local_development_cost = -0.2
+    supply_limit = 0.166666666666666666666666666
+}
+
+irrigation = {
+    local_development_cost = -0.1
+    supply_limit = 0.166666666666666666666666666
+}
+
+terrace = {
+    local_development_cost = -0.1
     supply_limit = 0.166666666666666666666666666
 }

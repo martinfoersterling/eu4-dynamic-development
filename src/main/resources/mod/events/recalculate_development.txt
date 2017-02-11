@@ -1,7 +1,8 @@
 
 namespace = mafoe_recalculate_development
 
-#
+# Calculates the progress of development growth of all provinces of one country.
+# Is called every 2 years by on_action pulse.
 
 country_event = {
 	id = mafoe_recalculate_development.1
@@ -12,9 +13,173 @@ country_event = {
 	hidden = yes
 	is_triggered_only = yes
 
+    immediate = {
+        hidden_effect = {
+            every_owned_province = {
+
+        # initialise these variables so that after all growth factors are added, we can multiply them with local
+        # development cost and global development cost and development efficiency
+                 set_variable = { which = temp_tax value = 0 }
+                 set_variable = { which = temp_prod value = 0 }
+                 set_variable = { which = temp_mp value = 0 }
+
+
+        # Check a long list of conditions to see how much progress is growing.... yawn
+
+        # capital grows faster
+                if = {
+                    limit = {
+                        is_capital = yes
+                    }
+                    change_variable = { which = temp_tax value = 5 }
+                    change_variable = { which = temp_prod value = 5 }
+                    change_variable = { which = temp_mp value = 5 }
+                }
+
+        # slower on single province islands
+                if = {
+                    limit = {
+                        island = yes
+                    }
+                    subtract_variable = { which = temp_tax value = 1 }
+                    subtract_variable = { which = temp_prod value = 1 }
+                    subtract_variable = { which = temp_mp value = 1 }
+                }
+
+        # slower with unrest
+        # cannot simply subtract unrest because it's an integer. Thanks, Paradox!
+                if = {
+                    limit = {
+                        unrest = 2
+                    }
+                    subtract_variable = { which = temp_tax which = unrest }
+                    subtract_variable = { which = temp_tax which = unrest }
+                    subtract_variable = { which = temp_prod which = unrest }
+                    subtract_variable = { which = temp_mp which = unrest }
+                }
+
+		# slower when looted: Subtract 10
+                if = {
+                    limit = {
+                        is_looted = yes
+                    }
+                    subtract_variable = { which = temp_tax value = 10 }
+                    subtract_variable = { which = temp_prod value = 10 }
+                    subtract_variable = { which = temp_mp value = 10 }
+                }
+
+		# slower when blockaded: Subtract 5 for production and 2 for tax/manpower
+                if = {
+                    limit = {
+                        is_blockaded = yes
+                    }
+                    subtract_variable = { which = temp_tax value = 2 }
+                    subtract_variable = { which = temp_prod value = 5 }
+                    subtract_variable = { which = temp_mp value = 2 }
+                }
+
+		# slower for colonies
+                if = {
+                    limit = {
+                        is_blockaded = yes
+                    }
+                    subtract_variable = { which = temp_tax value = 1 }
+                    subtract_variable = { which = temp_prod value = 1 }
+                    subtract_variable = { which = temp_mp value = 1 }
+                }
+
+		# if tradegood is wheat, fish, salt, then tax and manpower grow faster
+                if = {
+                    limit = {
+                        OR = {
+                            trade_goods = grain
+                            trade_goods = fish
+                            trade_goods = salt
+                        }
+                    }
+                    change_variable = { which = temp_tax value = 1 }
+                    change_variable = { which = temp_mp value = 1 }
+                }
+
+        #############
+        # now that all growth has been counted, we multiply it by some factors
+        # factors are:
+        #   - local development cost (from terrain and such)
+        #   - development cost (this is global)
+        #   - development efficiency (has 3 tiers from adm tech, each is 0.1 or 10%)
+        #   - growth boost active (decision, one per monarch power)
+        #############
+
+		# faster when taxation/production/manpower boosts are active
+                if = {
+                    limit = {
+            			owner = {
+                			has_country_modifier = tax_growth_boosted
+                        }
+                    }
+                    multiply_variable = { which = temp_tax value = 1.2 }
+                }
+                if = {
+                    limit = {
+            			owner = {
+                			has_country_modifier = production_growth_boosted
+                        }
+                    }
+                    multiply_variable = { which = temp_prod value = 1.2 }
+                }
+                if = {
+                    limit = {
+            			owner = {
+                			has_country_modifier = manpower_growth_boosted
+                        }
+                    }
+                    multiply_variable = { which = temp_mp value = 1.2 }
+                }
+
+		# faster with higher development efficiency
+		# has 3 tiers from adm tech, each is 0.1 or 10%
+		# we have to work with a temp variable here to somehow translate development_efficiency to progress
+
+                export_to_variable = { which = temp value = development_efficiency who = owner }
+                change_variable = { which = temp value = 1 }
+                multiply_variable = { which = tax_progress which = temp }
+
+		# faster with lower local development cost
+
+                set_variable = { which = temp value = 1 }
+                change_variable = { which = temp which = local_development_cost }
+                multiply_variable = { which = temp_tax which = temp }
+                multiply_variable = { which = temp_prod which = temp }
+                multiply_variable = { which = temp_mp which = temp }
+
+
+
+        # add the temp values that we calculated in this event to the persistent progress
+        change_variable = { which = tax_progress which = temp_tax }
+        change_variable = { which = production_progress which = temp_prod }
+        change_variable = { which = manpower_progress which = temp_mp }
+
+        # If tax_progress is >= 100, then increase base tax and reduce tax_progress by 100
+                if = {
+                    limit = {
+                        check_variable = { which = tax_progress value = 100 }
+                    }
+                    add_base_tax = 1
+                    subtract_variable = { which = tax_progress value = 100 }
+                }
+        # Can progress grow by more than 100 every 2 years? Who knows.... but lets make sure it works anyway
+                if = {
+                    limit = {
+                        check_variable = { which = tax_progress value = 100 }
+                    }
+                    add_base_tax = 1
+                    subtract_variable = { which = tax_progress value = 100 }
+                }
+            }
+        }
+    }
+
 	option = {
 		name = "wont_translate"
-        #todo
-
 	}
 }

@@ -12,6 +12,7 @@ namespace = mafoe_terraform
 # jungle (by slashing & burning) -> farmlands (after 5 years) -> savannah
 #
 # new "irrigation" modifier for desert & drylands & coastal desert
+# new "terrace farming" modifier for highlands
 
 country_event = {
 	id = mafoe_terraform.1
@@ -94,6 +95,41 @@ country_event = {
                 province_event = { id = mafoe_terraform_province_three.1 days = 1 }
             }
 
+            # irrigate desert and coastal desert
+            # only possible in non-arid regions, because what are you gonna irrigate with?
+            if = {
+                limit = {
+                    OR = {
+                        has_terrain = desert
+                        has_terrain = coastal_desert
+                    }
+                    NOT = { has_province_modifier = irrigation }
+                    NOR = {
+                        has_climate = arctic
+                        has_climate = tropical
+                        has_climate = arid
+                    }
+                }
+                province_event = { id = mafoe_terraform_province_six.1 days = 1 }
+            }
+
+            # terrace farming in highlands, mountains and hills
+            if = {
+                limit = {
+                    OR = {
+                        has_terrain = highlands
+                        has_terrain = hills
+                    }
+                    NOT = { has_province_modifier = terrace }
+                    NOR = {
+                        has_climate = arctic
+                        has_climate = tropical
+                        has_climate = arid
+                    }
+                }
+                province_event = { id = mafoe_terraform_province_seven.1 days = 1 }
+            }
+
             # jungle to savannah by slashing and burning
             # this makes the lands very fertile for a short time, but after a few years the soil becomes infertile
             # recovery takes decades, so we assume the average between short, very fertile and longer, infertile
@@ -105,6 +141,7 @@ country_event = {
                 }
                 province_event = { id = mafoe_terraform_province_five.1 days = 1 }
             }
+
         }
 	}
 }
