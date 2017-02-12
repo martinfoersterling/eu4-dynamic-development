@@ -16,3 +16,11 @@ on_bi_yearly_pulse_3 = {
         mafoe_terraform.1
 	}
 }
+
+# country
+on_startup = {
+	events = {
+	    mafoe_stunt_island_growth.1
+	}
+}
+

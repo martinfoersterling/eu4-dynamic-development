@@ -27,14 +27,15 @@ country_event = {
         # Check a long list of conditions to see how much progress is growing.... yawn
 
         # capital grows faster
-                if = {
-                    limit = {
-                        is_capital = yes
-                    }
-                    change_variable = { which = temp_tax value = 5 }
-                    change_variable = { which = temp_prod value = 5 }
-                    change_variable = { which = temp_mp value = 5 }
-                }
+# apparently the capital already gets a development cost bonus
+#                if = {
+#                    limit = {
+#                        is_capital = yes
+#                    }
+#                    change_variable = { which = temp_tax value = 5 }
+#                    change_variable = { which = temp_prod value = 5 }
+#                    change_variable = { which = temp_mp value = 5 }
+#                }
 
         # slower on single province islands
                 if = {
@@ -81,7 +82,7 @@ country_event = {
 		# slower for colonies
                 if = {
                     limit = {
-                        is_blockaded = yes
+                        is_colony = yes
                     }
                     subtract_variable = { which = temp_tax value = 1 }
                     subtract_variable = { which = temp_prod value = 1 }
@@ -153,11 +154,12 @@ country_event = {
                 multiply_variable = { which = temp_mp which = temp }
 
 
+        ###### finally done! ######
 
         # add the temp values that we calculated in this event to the persistent progress
-        change_variable = { which = tax_progress which = temp_tax }
-        change_variable = { which = production_progress which = temp_prod }
-        change_variable = { which = manpower_progress which = temp_mp }
+                change_variable = { which = tax_progress which = temp_tax }
+                change_variable = { which = production_progress which = temp_prod }
+                change_variable = { which = manpower_progress which = temp_mp }
 
         # If tax_progress is >= 100, then increase base tax and reduce tax_progress by 100
                 if = {

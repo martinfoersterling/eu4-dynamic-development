@@ -1,0 +1,26 @@
+
+namespace = mafoe_stunt_island_growth
+
+country_event = {
+	id = mafoe_stunt_island_growth.1
+	title = "wont_translate.title"
+	desc = "wont_translate.desc"
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "wont_translate"
+
+        every_owned_province = {
+            limit = {
+                island = yes
+            }
+            add_permanent_province_modifier = {
+                name = stunt_island_growth
+                duration = -1
+            }
+        }
+    }
+}

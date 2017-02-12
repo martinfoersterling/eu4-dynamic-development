@@ -52,3 +52,7 @@ terrace = {
     local_development_cost = -0.1
     supply_limit = 0.166666666666666666666666666
 }
+
+stunt_island_growth = {
+    local_development_cost = 0.2
+}
