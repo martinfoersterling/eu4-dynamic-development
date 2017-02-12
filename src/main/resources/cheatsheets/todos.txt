@@ -2,3 +2,7 @@
 - desert gaining dev too fast
 - decent icons for province modifiers
 - balancing terraforming
+- dynamic coring
+- dynamic culture??
+- add more administrative efficiency OR implement dynamic coring
+- make buildings cheaper and reduce build time

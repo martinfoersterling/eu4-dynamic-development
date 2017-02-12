@@ -74,6 +74,9 @@
  slash_and_burn:0 "Slash and burn"
  desc_slash_and_burn:0 "These jungles are made into fertile land by slash and burn before reverting into jungle while the soil recovers"
 
+ stunt_island_growth:0 "Stunted island growth"
+ desc_stunt_island_growth:0 "Small islands lack the resources to sustain inhibited growth"
+
  wont_translate.title:0 "No translation"
  wont_translate.desc:0 "No translation"
  wont_translate:0 "No translation"

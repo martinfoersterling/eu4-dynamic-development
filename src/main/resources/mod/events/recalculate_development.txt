@@ -15,81 +15,221 @@ country_event = {
 
     immediate = {
         hidden_effect = {
+
             every_owned_province = {
 
-        # initialise these variables so that after all growth factors are added, we can multiply them with local
-        # development cost and global development cost and development efficiency
-                 set_variable = { which = temp_tax value = 0 }
-                 set_variable = { which = temp_prod value = 0 }
-                 set_variable = { which = temp_mp value = 0 }
+        # initialise these variables with flat growth of 5 points for all
+                set_variable = { which = temp_tax value = 5 }
+                set_variable = { which = temp_prod value = 5 }
+                set_variable = { which = temp_mp value = 5 }
 
+                set_variable = { which = log1 which = temp_tax }
 
-        # Check a long list of conditions to see how much progress is growing.... yawn
+         #############
+         # Now multiply flat growth with all the yummy multipliers
+         # factors are:
+         #   - local development cost (from terrain and such)
+         #   - development cost (this is global)
+         #   - development efficiency (has 3 tiers from adm tech, each is 0.1 or 10%)
+         #   - growth boost active (decision, one per monarch power)
+         #############
 
-        # capital grows faster
-# apparently the capital already gets a development cost bonus
-#                if = {
-#                    limit = {
-#                        is_capital = yes
-#                    }
-#                    change_variable = { which = temp_tax value = 5 }
-#                    change_variable = { which = temp_prod value = 5 }
-#                    change_variable = { which = temp_mp value = 5 }
-#                }
+                # malus, used to balance the numbers
+                multiply_variable = { which = temp_tax value = 0.5 }
+                multiply_variable = { which = temp_prod value = 0.5 }
+                multiply_variable = { which = temp_mp value = 0.5 }
 
-        # slower on single province islands
+                set_variable = { which = log2 which = temp_tax }
+
+                # faster with higher development efficiency
+                # has 3 tiers from all 3 tech, each is 0.1 or 10%, at tech 17, 23, 27
+                # gotta ask for techs because there is no way to programmatically check development_efficiency
+                # Thanks, Paradox! Might as well make it fancier and check dip for dip, and mil for mp instead of just adm tech
                 if = {
                     limit = {
-                        island = yes
+                        adm_tech = 17
                     }
-                    subtract_variable = { which = temp_tax value = 1 }
-                    subtract_variable = { which = temp_prod value = 1 }
-                    subtract_variable = { which = temp_mp value = 1 }
+                    multiply_variable = { which = temp_tax value = 1.1 }
                 }
-
-        # slower with unrest
-        # cannot simply subtract unrest because it's an integer. Thanks, Paradox!
                 if = {
                     limit = {
-                        unrest = 2
+                        adm_tech = 23
                     }
-                    subtract_variable = { which = temp_tax which = unrest }
-                    subtract_variable = { which = temp_tax which = unrest }
-                    subtract_variable = { which = temp_prod which = unrest }
-                    subtract_variable = { which = temp_mp which = unrest }
+                    multiply_variable = { which = temp_tax value = 1.1 }
                 }
-
-		# slower when looted: Subtract 10
                 if = {
                     limit = {
-                        is_looted = yes
+                        adm_tech = 27
                     }
-                    subtract_variable = { which = temp_tax value = 10 }
-                    subtract_variable = { which = temp_prod value = 10 }
-                    subtract_variable = { which = temp_mp value = 10 }
+                    multiply_variable = { which = temp_tax value = 1.1 }
                 }
-
-		# slower when blockaded: Subtract 5 for production and 2 for tax/manpower
                 if = {
                     limit = {
-                        is_blockaded = yes
+                        dip_tech = 17
                     }
-                    subtract_variable = { which = temp_tax value = 2 }
-                    subtract_variable = { which = temp_prod value = 5 }
-                    subtract_variable = { which = temp_mp value = 2 }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                }
+                if = {
+                    limit = {
+                        dip_tech = 23
+                    }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                }
+                if = {
+                    limit = {
+                        dip_tech = 27
+                    }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                }
+                if = {
+                    limit = {
+                        mil_tech = 17
+                    }
+                    multiply_variable = { which = temp_mp value = 1.1 }
+                }
+                if = {
+                    limit = {
+                        mil_tech = 23
+                    }
+                    multiply_variable = { which = temp_mp value = 1.1 }
+                }
+                if = {
+                    limit = {
+                        mil_tech = 27
+                    }
+                    multiply_variable = { which = temp_mp value = 1.1 }
                 }
 
-		# slower for colonies
+                set_variable = { which = log3 which = temp_tax }
+
+        		# so apparently we can't check local development cost either, so how about a long list of checks? ugh...
+                # todo local dev cost
+                # todo achtung, hindufication & tengri_shiite_settled_in_capital needs to be a local modifier
+
+                set_variable = { which = log4 which = temp_tax }
+
+                # and global development cost is a no go either, so yea, more lists...
+                if = {
+                    limit = {
+                        government = imperial_city
+                    }
+                    multiply_variable = { which = temp_tax value = 1.1 }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                    multiply_variable = { which = temp_mp value = 1.1 }
+                }
+                if = {
+                    limit = {
+                        has_church_aspect = organised_through_bishops_aspect
+                    }
+                    multiply_variable = { which = temp_tax value = 1.05 }
+                    multiply_variable = { which = temp_prod value = 1.05 }
+                    multiply_variable = { which = temp_mp value = 1.05 }
+                }
+                if = {
+                    limit = {
+                         has_idea = custom_idea_development_cost
+                    }
+                    multiply_variable = { which = temp_tax value = 1.1 }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                    multiply_variable = { which = temp_mp value = 1.1 }
+                }
+                if = {
+                    limit = {
+                         has_disaster  = estate_nomadic_tribes_disaster
+                    }
+                    multiply_variable = { which = temp_tax value = 1.5 }
+                    multiply_variable = { which = temp_prod value = 1.5 }
+                    multiply_variable = { which = temp_mp value = 1.5 }
+                }
+                # not exactly, since the value should scale with loyalty, but wtf...
+                if = {
+                    limit = {
+                         estate_loyalty = {
+                             estate = estate_burghers
+                             loyalty = 60
+                         }
+                    }
+                    multiply_variable = { which = temp_tax value = 1.1 }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                    multiply_variable = { which = temp_mp value = 1.1 }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                         estate_loyalty = {
+                             estate = estate_burghers
+                             loyalty = 40
+                         }
+                        }
+                    }
+                    multiply_variable = { which = temp_tax value = 0.9 }
+                    multiply_variable = { which = temp_prod value = 0.9 }
+                    multiply_variable = { which = temp_mp value = 0.9 }
+                }
+                if = {
+                    limit = {
+                         owner = {
+                            OR = {
+                                has_country_modifier = bra_crushing_the_robber_barons
+                                has_country_modifier = granada_influx
+                                has_ruler_modifier = tuscany_duke_treasury
+                            }
+                         }
+                    }
+                    multiply_variable = { which = temp_tax value = 1.05 }
+                    multiply_variable = { which = temp_prod value = 1.05 }
+                    multiply_variable = { which = temp_mp value = 1.05 }
+                }
+                if = {
+                    limit = {
+                         owner = {
+                            has_country_modifier = growth_of_the_cattle_trade
+                         }
+                    }
+                    multiply_variable = { which = temp_tax value = 0.9 }
+                    multiply_variable = { which = temp_prod value = 0.9 }
+                    multiply_variable = { which = temp_mp value = 0.9 }
+                }
+                if = {
+                    limit = {
+                        owner = {
+                            OR = {
+                                has_ruler_modifier = mimar_sinan
+                                has_country_modifier = tuscany_fernandino_construction
+                            }
+                        }
+                    }
+                    multiply_variable = { which = temp_tax value = 1.1 }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                    multiply_variable = { which = temp_mp value = 1.1 }
+                }
+
+
+
+                set_variable = { which = log5 which = temp_tax }
+
+        		# slower for colonies (+50%)
                 if = {
                     limit = {
                         is_colony = yes
                     }
-                    subtract_variable = { which = temp_tax value = 1 }
-                    subtract_variable = { which = temp_prod value = 1 }
-                    subtract_variable = { which = temp_mp value = 1 }
+                    multiply_variable = { which = temp_tax value = 0.5 }
+                    multiply_variable = { which = temp_prod value = 0.5 }
+                    multiply_variable = { which = temp_mp value = 0.5 }
+                }
+        		# slower for islands (+20%)
+                if = {
+                    limit = {
+                        island = yes
+                    }
+                    multiply_variable = { which = temp_tax value = 0.8 }
+                    multiply_variable = { which = temp_prod value = 0.8 }
+                    multiply_variable = { which = temp_mp value = 0.8 }
                 }
 
-		# if tradegood is wheat, fish, salt, then tax and manpower grow faster
+        		# if tradegood is wheat, fish, salt, then tax and manpower grow faster
+        		# equals -10%/-20% development cost bonus for tax/mp
+        		# finally something useful from these!
                 if = {
                     limit = {
                         OR = {
@@ -98,27 +238,29 @@ country_event = {
                             trade_goods = salt
                         }
                     }
-                    change_variable = { which = temp_tax value = 1 }
-                    change_variable = { which = temp_mp value = 1 }
+                    multiply_variable = { which = temp_tax value = 1.1 }
+                    multiply_variable = { which = temp_mp value = 1.2 }
+                }
+        		# if tradegood is cloth, apparently everything grows faster
+                if = {
+                    limit = {
+                        trade_goods = cloth
+                    }
+                    multiply_variable = { which = temp_tax value = 1.1 }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                    multiply_variable = { which = temp_mp value = 1.1 }
                 }
 
-        #############
-        # now that all growth has been counted, we multiply it by some factors
-        # factors are:
-        #   - local development cost (from terrain and such)
-        #   - development cost (this is global)
-        #   - development efficiency (has 3 tiers from adm tech, each is 0.1 or 10%)
-        #   - growth boost active (decision, one per monarch power)
-        #############
+                set_variable = { which = log6 which = temp_tax }
 
-		# faster when taxation/production/manpower boosts are active
+        		# faster when taxation/production/manpower boosts are active
                 if = {
                     limit = {
             			owner = {
                 			has_country_modifier = tax_growth_boosted
                         }
                     }
-                    multiply_variable = { which = temp_tax value = 1.2 }
+                    multiply_variable = { which = temp_tax value = 1.5 }
                 }
                 if = {
                     limit = {
@@ -126,7 +268,7 @@ country_event = {
                 			has_country_modifier = production_growth_boosted
                         }
                     }
-                    multiply_variable = { which = temp_prod value = 1.2 }
+                    multiply_variable = { which = temp_prod value = 1.5 }
                 }
                 if = {
                     limit = {
@@ -134,25 +276,213 @@ country_event = {
                 			has_country_modifier = manpower_growth_boosted
                         }
                     }
+                    multiply_variable = { which = temp_mp value = 1.5 }
+                }
+
+                # now for the buildings... uch
+                # can't do this by slapping local_development_cost on each building because each building is
+                # supposed to only improve that development it belongs to, aka production buildings should only
+                # boost production growth, not tax or manpower growth (special case: university)
+
+                # tax buildings first...
+                if = {
+                    limit = {
+            			has_building = temple
+                    }
+                    multiply_variable = { which = temp_tax value = 1.2 }
+                }
+                if = {
+                    limit = {
+            			has_building = cathedral
+                    }
+                    multiply_variable = { which = temp_tax value = 1.4 }
+                }
+                if = {
+                    limit = {
+            			has_building = courthouse
+                    }
+                    multiply_variable = { which = temp_tax value = 1.2 }
+                }
+                if = {
+                    limit = {
+            			has_building = town_hall
+                    }
+                    multiply_variable = { which = temp_tax value = 1.4 }
+                }
+
+                # ...production buildings second...
+                if = {
+                    limit = {
+            			has_building = workshop
+                    }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                }
+                if = {
+                    limit = {
+            			has_building = counting_house
+                    }
+                    multiply_variable = { which = temp_prod value = 1.2 }
+                }
+                if = {
+                    limit = {
+            			has_building = marketplace
+                    }
+                    multiply_variable = { which = temp_prod value = 1.1 }
+                }
+                if = {
+                    limit = {
+            			has_building = trade_depot
+                    }
+                    multiply_variable = { which = temp_prod value = 1.2 }
+                }
+                if = {
+                    limit = {
+            			has_building = stock_exchange
+                    }
+                    multiply_variable = { which = temp_prod value = 1.3 }
+                }
+
+                # ...manufactories third...
+                if = {
+                    limit = {
+            			has_building = wharf
+                    }
+                    multiply_variable = { which = temp_prod value = 1.3 }
+                }
+                if = {
+                    limit = {
+            			has_building = weapons
+                    }
+                    multiply_variable = { which = temp_prod value = 1.3 }
+                }
+                if = {
+                    limit = {
+            			has_building = textile
+                    }
+                    multiply_variable = { which = temp_prod value = 1.3 }
+                }
+                if = {
+                    limit = {
+            			has_building = plantations
+                    }
+                    multiply_variable = { which = temp_prod value = 1.3 }
+                }
+                if = {
+                    limit = {
+            			has_building = tradecompany
+                    }
+                    multiply_variable = { which = temp_prod value = 1.3 }
+                }
+
+                # ...military buildings fourth... (kill me nao!)
+                if = {
+                    limit = {
+            			has_building = barracks
+                    }
+                    multiply_variable = { which = temp_mp value = 1.08 }
+                }
+                if = {
+                    limit = {
+            			has_building = training_fields
+                    }
+                    multiply_variable = { which = temp_mp value = 1.08 }
+                }
+                if = {
+                    limit = {
+            			has_building = regimental_camp
+                    }
+                    multiply_variable = { which = temp_mp value = 1.16 }
+                }
+                if = {
+                    limit = {
+            			has_building = conscription_center
+                    }
+                    multiply_variable = { which = temp_mp value = 1.16 }
+                }
+                if = {
+                    limit = {
+            			has_building = shipyard
+                    }
+                    multiply_variable = { which = temp_mp value = 1.08 }
+                }
+                if = {
+                    limit = {
+            			has_building = dock
+                    }
+                    multiply_variable = { which = temp_mp value = 1.08 }
+                }
+                if = {
+                    limit = {
+            			has_building = grand_shipyard
+                    }
+                    multiply_variable = { which = temp_mp value = 1.16 }
+                }
+                if = {
+                    limit = {
+            			has_building = drydock
+                    }
+                    multiply_variable = { which = temp_mp value = 1.16 }
+                }
+
+                # ...and forts last.
+                if = {
+                    limit = {
+            			has_building = fort_15th
+                    }
+                    multiply_variable = { which = temp_mp value = 1.05 }
+                }
+                if = {
+                    limit = {
+            			has_building = fort_16th
+                    }
+                    multiply_variable = { which = temp_mp value = 1.1 }
+                }
+                if = {
+                    limit = {
+            			has_building = fort_17th
+                    }
+                    multiply_variable = { which = temp_mp value = 1.15 }
+                }
+                if = {
+                    limit = {
+            			has_building = fort_18th
+                    }
                     multiply_variable = { which = temp_mp value = 1.2 }
                 }
 
-		# faster with higher development efficiency
-		# has 3 tiers from adm tech, each is 0.1 or 10%
-		# we have to work with a temp variable here to somehow translate development_efficiency to progress
+                set_variable = { which = log7 which = temp_tax }
 
-                export_to_variable = { which = temp value = development_efficiency who = owner }
-                change_variable = { which = temp value = 1 }
-                multiply_variable = { which = tax_progress which = temp }
+                # university gets -50% bonus
+                if = {
+                    limit = {
+                        has_building = university
+                    }
+                    multiply_variable = { which = temp_tax value = 1.5 }
+                    multiply_variable = { which = temp_prod value = 1.5 }
+                    multiply_variable = { which = temp_mp value = 1.5 }
+                }
 
-		# faster with lower local development cost
 
-                set_variable = { which = temp value = 1 }
-                change_variable = { which = temp which = local_development_cost }
-                multiply_variable = { which = temp_tax which = temp }
-                multiply_variable = { which = temp_prod which = temp }
-                multiply_variable = { which = temp_mp which = temp }
+    #TODO looted, blockaded
 
+            # slower with unrest
+            # unrest is a special case. it can lead to negative growth
+            # formula: if unrest is >= 0.5, then add (-1.5 * unrest - 1.5) to the progress
+            # since we multiply flat growth and bonuses before we subtract a flat unrest penalty,  it is possible
+            # to "power through" unrest later on in the game and have growing development despite unrest
+                if = {
+                    limit = {
+            			unrest = 0.5
+                    }
+                    set_variable = { which = temp value = -1.5 }
+                    multiply_variable = { which = temp which = unrest }
+                    subtract_variable = { which = temp value = 1.5 }
+                    change_variable = { which = temp_tax which = temp }
+                    change_variable = { which = temp_prod which = temp }
+                    change_variable = { which = temp_mp which = temp }
+                }
+
+                set_variable = { which = log8 which = temp_tax }
 
         ###### finally done! ######
 
@@ -161,7 +491,8 @@ country_event = {
                 change_variable = { which = production_progress which = temp_prod }
                 change_variable = { which = manpower_progress which = temp_mp }
 
-        # If tax_progress is >= 100, then increase base tax and reduce tax_progress by 100
+        # If progress is >= 100, then increase base dev and reduce progress by 100
+        # no need to check for >= 200 with current balancing
                 if = {
                     limit = {
                         check_variable = { which = tax_progress value = 100 }
@@ -169,14 +500,54 @@ country_event = {
                     add_base_tax = 1
                     subtract_variable = { which = tax_progress value = 100 }
                 }
-        # Can progress grow by more than 100 every 2 years? Who knows.... but lets make sure it works anyway
                 if = {
                     limit = {
-                        check_variable = { which = tax_progress value = 100 }
+                        check_variable = { which = production_progress value = 100 }
                     }
-                    add_base_tax = 1
-                    subtract_variable = { which = tax_progress value = 100 }
+                    add_base_production = 1
+                    subtract_variable = { which = production_progress value = 100 }
                 }
+                if = {
+                    limit = {
+                        check_variable = { which = manpower_progress value = 100 }
+                    }
+                    add_base_manpower = 1
+                    subtract_variable = { which = manpower_progress value = 100 }
+                }
+
+        # gotta check negative growth, too
+
+                if = {
+                    limit = {
+                        NOT = { check_variable = { which = tax_progress value = -100 }}
+                    }
+                    add_base_tax = -1
+                    change_variable = { which = tax_progress value = 100 }
+                }
+
+                if = {
+                    limit = {
+                        NOT = { check_variable = { which = production_progress value = -100 }}
+                    }
+                    add_base_production = -1
+                    change_variable = { which = production_progress value = 100 }
+                }
+
+                if = {
+                    limit = {
+                        NOT = { check_variable = { which = manpower_progress value = -100 }}
+                    }
+                    add_base_manpower = -1
+                    change_variable = { which = manpower_progress value = 100 }
+                }
+
+        # set all unneeded variables to 0. Not sure this is helpful. No way to remove variables?
+                    set_variable = { which = temp_tax value = 0 }
+                    set_variable = { which = temp_prod value = 0 }
+                    set_variable = { which = temp_mp value = 0 }
+                    set_variable = { which = temp value = 0 }
+
+        # NOW we're done... phew
             }
         }
     }
