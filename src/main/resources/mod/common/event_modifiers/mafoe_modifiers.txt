@@ -56,3 +56,9 @@ terrace = {
 stunt_island_growth = {
     local_development_cost = 0.2
 }
+
+facilitate_conquest = {
+	fort_maintenance_modifier = -0.4
+	province_warscore_cost = -0.6
+	siege_ability = 0.15
+}

@@ -1,0 +1,11 @@
+cb_paintmap = {
+	valid_for_subject = no
+
+	prerequisites = {
+		dip_tech = 1
+		is_subject = no
+		is_revolution_target = no
+	}
+
+	war_goal = paint_provinces
+}

@@ -1,0 +1,20 @@
+
+namespace = mafoe_setup
+
+country_event = {
+	id = mafoe_setup.1
+	title = "wont_translate.title"
+	desc = "wont_translate.desc"
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "wont_translate"
+		add_country_modifier = {
+			name = facilitate_conquest
+			duration = -1
+		}
+    }
+}

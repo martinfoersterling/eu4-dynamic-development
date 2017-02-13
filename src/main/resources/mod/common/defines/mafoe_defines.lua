@@ -6,3 +6,19 @@ NDefines.NDiplomacy.ANNEX_DIP_COST_PER_DEVELOPMENT = 2
 NDefines.NCountry.PS_IMPROVE_PROVINCE_BASE = 10000
 
 NDefines.NGraphics.CITY_SPRAWL_AMOUNT = 0.3 						-- Size of cities, higher gives larger cities
+
+NDefines.NCountry.PS_MAKE_PROVINCE_CORE = 0
+NDefines.NCountry.CORE_COLONY = 0
+NDefines.NCountry.CORE_OVERSEAS = 0
+NDefines.NCountry.CORE_SAME_REGION = 0
+NDefines.NCountry.CORE_SAME_CONTINENT = 0
+NDefines.NCountry.CORE_HAD_CLAIM = 0
+NDefines.NCountry.CORE_HAD_PERMANENT_CLAIM = 0
+NDefines.NCountry.MONTHS_TO_CORE_MAXIMUM = 0
+NDefines.NCountry.MONTHS_TO_CORE = 0
+
+NDefines.NMilitary.DAYS_PER_SIEGE_PHASE = 20
+
+NDefines.NAI.AGGRESSIVENESS = 1750
+NDefines.NAI.AGGRESSIVENESS_BONUS_EASY_WAR = 2500
+NDefines.NAI.MISSION_PICK_CHANCE = 100
