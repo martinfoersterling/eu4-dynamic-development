@@ -77,6 +77,9 @@
  stunt_island_growth:0 "Stunted island growth"
  desc_stunt_island_growth:0 "Small islands lack the resources to sustain inhibited growth"
 
+ province_is_integrating:0 "Ongoing integration of conquered territory"
+ desc_province_is_integrating:0 "The people in this province have not joined you voluntarily. Unrest, discontent and economic strife will take years to subside before they will accept their fate"
+
  wont_translate.title:0 "No translation"
  wont_translate.desc:0 "No translation"
  wont_translate:0 "No translation"

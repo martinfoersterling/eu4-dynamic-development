@@ -18,12 +18,15 @@ country_event = {
 
             every_owned_province = {
 
+
+                export_to_variable = { which = log3 value = modifier:local_development_cost }
+                export_to_variable = { which = log2 value = modifier:development_cost who = ROOT }
+                export_to_variable = { which = log1 value = modifier:development_efficiency who = ROOT }
+
         # initialise these variables with flat growth of 5 points for all
                 set_variable = { which = temp_tax value = 5 }
                 set_variable = { which = temp_prod value = 5 }
                 set_variable = { which = temp_mp value = 5 }
-
-#                set_variable = { which = log1 which = temp_tax }
 
          #############
          # Now multiply flat growth with all the yummy multipliers
@@ -38,8 +41,6 @@ country_event = {
                 multiply_variable = { which = temp_tax value = 0.5 }
                 multiply_variable = { which = temp_prod value = 0.5 }
                 multiply_variable = { which = temp_mp value = 0.5 }
-
-#                set_variable = { which = log2 which = temp_tax }
 
                 # faster with higher development efficiency
                 # has 3 tiers from all 3 tech, each is 0.1 or 10%, at tech 17, 23, 27
@@ -118,12 +119,8 @@ country_event = {
                     multiply_variable = { which = temp_mp value = 1.1 }
                 }
 
-#                set_variable = { which = log3 which = temp_tax }
-
         		# so apparently we can't check local development cost either, so how about a long list of checks? ugh...
                 # todo local dev cost and dev cost - there are so many sources, i cba with this crap
-
-#                set_variable = { which = log4 which = temp_tax }
 
                 # and global development cost is a no go either, so yea, more lists...
                 if = {
@@ -146,17 +143,6 @@ country_event = {
                     multiply_variable = { which = temp_prod value = 1.05 }
                     multiply_variable = { which = temp_mp value = 1.05 }
                 }
-#validator says this idea doesnt exist... great...
-#                if = {
-#                    limit = {
-#                        owner = {
-#                            has_idea = custom_idea_development_cost
-#                        }
-#                    }
-#                    multiply_variable = { which = temp_tax value = 1.1 }
-#                    multiply_variable = { which = temp_prod value = 1.1 }
-#                    multiply_variable = { which = temp_mp value = 1.1 }
-#                }
                 if = {
                     limit = {
                         owner = {

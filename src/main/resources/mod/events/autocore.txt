@@ -1,0 +1,51 @@
+
+namespace = mafoe_autocore
+
+# Auto-coring means that coring costs no ADM for the already existing act of "coring".
+# Here, I slap a modifier on a newly conquered province that makes the province useless
+# for 5 years if the new owner doesn't already have a core. If the new owner has a claim, it's 4 years instead.
+# Yes, autonomy already does kinda the same, but
+# Let's keep it simple for now.
+
+province_event = {
+	id = mafoe_autocore.1
+	title = "wont_translate.title"
+	desc = "wont_translate.desc"
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+
+	option = {
+	    name = "wont_translate"
+
+        if = {
+            limit = {
+                NOT = { is_core = owner }
+            }
+            if = {
+                limit = {
+                    OR = {
+                        #is_permanent_claim = owner
+                        is_claim = owner
+                    }
+                }
+                add_province_modifier = {
+                    name = province_is_integrating
+                    duration = 2920 #8 years
+                }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        is_claim = owner
+                    }
+                }
+                add_province_modifier = {
+                    name = province_is_integrating
+                    duration = 3650 #10 years
+                }
+            }
+        }
+	}
+}

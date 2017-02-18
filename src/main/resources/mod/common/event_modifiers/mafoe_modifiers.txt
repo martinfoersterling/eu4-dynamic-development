@@ -66,3 +66,12 @@ facilitate_conquest = {
 facilitate_buildings = {
 	build_cost = -0.5
 }
+
+province_is_integrating = {
+    local_unrest = 1
+    local_tax_modifier = -2
+   	local_production_efficiency = -2
+   	province_trade_power_modifier = -2
+    local_manpower_modifier = -2
+	local_autonomy = 0.1
+}

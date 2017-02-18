@@ -25,3 +25,9 @@ on_startup = {
 	}
 }
 
+# province
+on_province_owner_change = {
+	events = {
+	    mafoe_autocore.1
+	}
+}
