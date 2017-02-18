@@ -16,5 +16,9 @@ country_event = {
 			name = facilitate_conquest
 			duration = -1
 		}
+		add_country_modifier = {
+			name = facilitate_buildings
+			duration = -1
+		}
     }
 }

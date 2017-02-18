@@ -62,3 +62,7 @@ facilitate_conquest = {
 	province_warscore_cost = -0.6
 	siege_ability = 0.15
 }
+
+facilitate_buildings = {
+	build_cost = -0.5
+}
