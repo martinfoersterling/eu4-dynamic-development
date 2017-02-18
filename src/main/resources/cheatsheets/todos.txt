@@ -6,3 +6,5 @@
 - dynamic culture??
 - add more administrative efficiency OR implement dynamic coring
 - make buildings cheaper and reduce build time
+- make manually improving dev cheap again because I cba to handle all development cost bonuses
+- terraforming events never happen

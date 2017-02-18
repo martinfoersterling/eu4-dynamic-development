@@ -9,7 +9,7 @@ namespace = mafoe_terraform
 # grasslands -> farmlands
 # marsh -> grasslands
 # coastline -> grasslands
-# jungle (by slashing & burning) -> farmlands (after 5 years) -> savannah
+# jungle (by slashing & burning) -> savannah
 #
 # new "irrigation" modifier for desert & drylands & coastal desert
 # new "terrace farming" modifier for highlands
@@ -20,24 +20,102 @@ country_event = {
 	desc = "wont_translate.desc"
 	picture = CITY_DEVELOPMENT_eventPicture
 
-	hidden = no
+	hidden = yes
 	is_triggered_only = yes
 
 	option = {
-		name = "mafoe.terraform.forest.to.grassland.option"
+		name = "wont_translate"
 
         every_owned_province = {
             limit = {
                 development = 20
-                NOR = {
-                    has_province_modifier = forest_clearance
-                    has_climate = arctic
+                NOT = {
+                    OR = {
+                        has_climate = arctic
+                        is_colony = yes
+                    }
+                }
+                NOT = {
+                    OR = {
+                        has_province_modifier = farms
+                        has_province_modifier = hills_improved
+                        has_province_modifier = slash_and_burn
+                        has_province_modifier = irrigation
+                        has_province_modifier = terrace
+                    }
                 }
             }
 
-            # grasslands to farmlands is easy
+            # chance to terraform is about dev/4 in %, aka:
+            # 20 dev -> 5% chance to terraform every 2 years
+            # 40 dev -> 10% chance to terraform every 2 years
+            # more dev than 40 still counts as 10% because I cba with dis shit
+            # modding should be fun and not a pita because Paradox can't even offer simple arithmetics for modders
+            set_variable = { which = terraform_yes value = 0 }
             if = {
                 limit = {
+                    development = 20
+                    NOT = { development = 24 }
+                }
+                random = {
+                    chance = 5
+                    set_variable = { which = terraform_yes value = 1 }
+                }
+            }
+            if = {
+                limit = {
+                    development = 24
+                    NOT = { development = 28 }
+                }
+                random = {
+                    chance = 6
+                    set_variable = { which = terraform_yes value = 1 }
+                }
+            }
+            if = {
+                limit = {
+                    development = 28
+                    NOT = { development = 32 }
+                }
+                random = {
+                    chance = 7
+                    set_variable = { which = terraform_yes value = 1 }
+                }
+            }
+            if = {
+                limit = {
+                    development = 32
+                    NOT = { development = 36 }
+                }
+                random = {
+                    chance = 8
+                    set_variable = { which = terraform_yes value = 1 }
+                }
+            }
+            if = {
+                limit = {
+                    development = 36
+                    NOT = { development = 40 }
+                }
+                random = {
+                    chance = 9
+                    set_variable = { which = terraform_yes value = 1 }
+                }
+            }
+            if = {
+                limit = {
+                    development = 40
+                }
+                random = {
+                    chance = 10
+                    set_variable = { which = terraform_yes value = 1 }
+                }
+            }
+
+             # grasslands to farmlands is easy
+            if = {
+                limit = {
+                    check_variable = { which = terraform_yes value = 1 }
                     OR = {
                         has_terrain = grasslands
                         has_province_modifier = forest_clearance
@@ -45,9 +123,11 @@ country_event = {
                         has_province_modifier = coastline_improved
                     }
                     NOT = { has_province_modifier = farms }
-                    NOR = {
-                        has_climate = arctic
-                        has_climate = tropical
+                    NOT = {
+                        OR = {
+                            has_climate = arctic
+                            has_climate = tropical
+                        }
                     }
                 }
                 province_event = { id = mafoe_terraform_province_two.1 days = 1 }
@@ -56,15 +136,16 @@ country_event = {
             # forest to grasslands is easy
             if = {
                 limit = {
+                    check_variable = { which = terraform_yes value = 1 }
                     OR = {
                         has_terrain = forest
                         has_terrain = woods
                     }
                     NOT = { has_province_modifier = forest_clearance }
-                    NOR = {
+                    NOT = { OR = {
                         has_climate = arctic
                         has_climate = tropical
-                    }
+                    }}
                 }
                 province_event = { id = mafoe_terraform_province_one.1 days = 1 }
             }
@@ -72,12 +153,13 @@ country_event = {
             # coastline to grasslands is so so
             if = {
                 limit = {
+                    check_variable = { which = terraform_yes value = 1 }
                     has_terrain = coastline
                     NOT = { has_province_modifier = coastline_improved }
-                    NOR = {
+                    NOT = { OR = {
                         has_climate = arctic
                         has_climate = tropical
-                    }
+                    }}
                 }
                 province_event = { id = mafoe_terraform_province_four.1 days = 1 }
             }
@@ -85,12 +167,13 @@ country_event = {
             # marsh to grasslands is tough
             if = {
                 limit = {
+                    check_variable = { which = terraform_yes value = 1 }
                     has_terrain = marsh
                     NOT = { has_province_modifier = land_reclamation }
-                    NOR = {
+                    NOT = { OR = {
                         has_climate = arctic
                         has_climate = tropical
-                    }
+                    }}
                 }
                 province_event = { id = mafoe_terraform_province_three.1 days = 1 }
             }
@@ -99,16 +182,17 @@ country_event = {
             # only possible in non-arid regions, because what are you gonna irrigate with?
             if = {
                 limit = {
+                    check_variable = { which = terraform_yes value = 1 }
                     OR = {
                         has_terrain = desert
                         has_terrain = coastal_desert
                     }
                     NOT = { has_province_modifier = irrigation }
-                    NOR = {
+                    NOT = { OR = {
                         has_climate = arctic
                         has_climate = tropical
                         has_climate = arid
-                    }
+                    }}
                 }
                 province_event = { id = mafoe_terraform_province_six.1 days = 1 }
             }
@@ -116,16 +200,17 @@ country_event = {
             # terrace farming in highlands, mountains and hills
             if = {
                 limit = {
+                    check_variable = { which = terraform_yes value = 1 }
                     OR = {
                         has_terrain = highlands
                         has_terrain = hills
                     }
                     NOT = { has_province_modifier = terrace }
-                    NOR = {
+                    NOT = { OR = {
                         has_climate = arctic
                         has_climate = tropical
                         has_climate = arid
-                    }
+                    }}
                 }
                 province_event = { id = mafoe_terraform_province_seven.1 days = 1 }
             }
@@ -136,12 +221,12 @@ country_event = {
             # episodes makes the land behave like savannah
             if = {
                 limit = {
+                    check_variable = { which = terraform_yes value = 1 }
                     has_terrain = jungle
                     NOT = { has_province_modifier = slash_and_burn }
                 }
                 province_event = { id = mafoe_terraform_province_five.1 days = 1 }
             }
-
-        }
+       }
 	}
 }
