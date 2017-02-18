@@ -25,10 +25,8 @@ province_event = {
             }
             if = {
                 limit = {
-                    OR = {
-                        #is_permanent_claim = owner
-                        is_claim = owner
-                    }
+                    #this is also true for permanent claims
+                    is_claim = owner
                 }
                 add_province_modifier = {
                     name = province_is_integrating

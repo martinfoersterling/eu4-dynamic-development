@@ -18,10 +18,46 @@ country_event = {
 
             every_owned_province = {
 
+        # grab these modifiers for use in the calculations
+                export_to_variable = { which = ldc value = modifier:local_development_cost }
+                export_to_variable = { which = gdc value = modifier:development_cost who = ROOT }
+        # normalize these modifiers so we can simply multiply them as factor later on
+                # ldc usually between 0.5 (great) and 1.5 (bad), so let's just leave it like this, ok?
+                # gdc is usually between -1 (great) and 1 (bad), so let's negate and add 1
+                multiply_variable = { which = gdc value = -1 }
+                change_variable = { which = gdc value = 1 }
 
-                export_to_variable = { which = log3 value = modifier:local_development_cost }
-                export_to_variable = { which = log2 value = modifier:development_cost who = ROOT }
-                export_to_variable = { which = log1 value = modifier:development_efficiency who = ROOT }
+        # can't grab development efficiency for some reason, so this gotta do
+        # has 3 tiers from all 3 tech, each is 0.1 or 10%, at tech 17, 23, 27
+        # gotta ask for techs because there is no way to programmatically check development_efficiency
+        # Thanks, Paradox!
+                # doesn't do anything before tech 17
+                set_variable = { which = gde value = 1 }
+                if = {
+                    limit = {
+                        owner = {
+                            adm_tech = 17
+                        }
+                    }
+                    set_variable = { which = gde value = 1.2 }
+                }
+                if = {
+                    limit = {
+                        owner = {
+                            adm_tech = 23
+                        }
+                    }
+                    set_variable = { which = gde value = 1.4 }
+                }
+                if = {
+                    limit = {
+                        owner = {
+                            adm_tech = 27
+                        }
+                    }
+                    set_variable = { which = gde value = 1.6 }
+                }
+
 
         # initialise these variables with flat growth of 5 points for all
                 set_variable = { which = temp_tax value = 5 }
@@ -31,188 +67,30 @@ country_event = {
          #############
          # Now multiply flat growth with all the yummy multipliers
          # factors are:
-         #   - local development cost (from terrain and such)
-         #   - development cost (this is global)
-         #   - development efficiency (has 3 tiers from adm tech, each is 0.1 or 10%)
+         #   - non yummy 50% penalty to make this formulae work
+         #   - local development cost (from terrain and such), called ldc
+         #   - development cost (this is global), called gdc
+         #   - development efficiency (has 3 tiers from adm tech, each is 0.1 or 10%), called gde
          #   - growth boost active (decision, one per monarch power)
+         #   - some special cases, like tradegood & colonies
          #############
 
                 # malus, used to balance the numbers
                 multiply_variable = { which = temp_tax value = 0.5 }
                 multiply_variable = { which = temp_prod value = 0.5 }
                 multiply_variable = { which = temp_mp value = 0.5 }
-
-                # faster with higher development efficiency
-                # has 3 tiers from all 3 tech, each is 0.1 or 10%, at tech 17, 23, 27
-                # gotta ask for techs because there is no way to programmatically check development_efficiency
-                # Thanks, Paradox! Might as well make it fancier and check dip for dip, and mil for mp instead of just adm tech
-                if = {
-                    limit = {
-                        owner = {
-                            adm_tech = 17
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            adm_tech = 23
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            adm_tech = 27
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            dip_tech = 17
-                        }
-                    }
-                    multiply_variable = { which = temp_prod value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            dip_tech = 23
-                        }
-                    }
-                    multiply_variable = { which = temp_prod value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            dip_tech = 27
-                        }
-                    }
-                    multiply_variable = { which = temp_prod value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            mil_tech = 17
-                        }
-                    }
-                    multiply_variable = { which = temp_mp value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            mil_tech = 23
-                        }
-                    }
-                    multiply_variable = { which = temp_mp value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            mil_tech = 27
-                        }
-                    }
-                    multiply_variable = { which = temp_mp value = 1.1 }
-                }
-
-        		# so apparently we can't check local development cost either, so how about a long list of checks? ugh...
-                # todo local dev cost and dev cost - there are so many sources, i cba with this crap
-
-                # and global development cost is a no go either, so yea, more lists...
-                if = {
-                    limit = {
-                        owner = {
-                            government = imperial_city
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.1 }
-                    multiply_variable = { which = temp_prod value = 1.1 }
-                    multiply_variable = { which = temp_mp value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            has_church_aspect = organised_through_bishops_aspect
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.05 }
-                    multiply_variable = { which = temp_prod value = 1.05 }
-                    multiply_variable = { which = temp_mp value = 1.05 }
-                }
-                if = {
-                    limit = {
-                        owner = {
-                            has_disaster  = estate_nomadic_tribes_disaster
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.5 }
-                    multiply_variable = { which = temp_prod value = 1.5 }
-                    multiply_variable = { which = temp_mp value = 1.5 }
-                }
-                # not exactly, since the value should scale with loyalty, but wtf...
-                if = {
-                    limit = {
-                        owner = {
-                             estate_loyalty = {
-                                 estate = estate_burghers
-                                 loyalty = 60
-                             }
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.1 }
-                    multiply_variable = { which = temp_prod value = 1.1 }
-                    multiply_variable = { which = temp_mp value = 1.1 }
-                }
-                if = {
-                    limit = {
-                        NOT = {
-                            owner = {
-                                estate_loyalty = {
-                                         estate = estate_burghers
-                                         loyalty = 40
-                                }
-                            }
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 0.9 }
-                    multiply_variable = { which = temp_prod value = 0.9 }
-                    multiply_variable = { which = temp_mp value = 0.9 }
-                }
-
-#                set_variable = { which = log5 which = temp_tax }
-
-        		# slower for tribal societies (+50%)
-                if = {
-                    limit = {
-                        owner = {
-                            OR = {
-                                is_tribal = yes
-                                is_nomad = yes
-                            }
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 0.5 }
-                    multiply_variable = { which = temp_prod value = 0.5 }
-                    multiply_variable = { which = temp_mp value = 0.5 }
-                }
-
-                # faster in important trade provinces
-                if = {
-                    limit = {
-                        OR = {
-                            has_province_modifier = important_natural_harbor
-                            has_province_modifier = inland_center_of_trade_modifier
-                            has_province_modifier = center_of_trade_modifier
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.05 }
-                    multiply_variable = { which = temp_prod value = 1.05 }
-                    multiply_variable = { which = temp_mp value = 1.05 }
-                }
+                #ldc
+                multiply_variable = { which = temp_tax which = ldc }
+                multiply_variable = { which = temp_prod which = ldc }
+                multiply_variable = { which = temp_mp which = ldc }
+                #gdc
+                multiply_variable = { which = temp_tax which = gdc }
+                multiply_variable = { which = temp_prod which = gdc }
+                multiply_variable = { which = temp_mp which = gdc }
+                #gde
+                multiply_variable = { which = temp_tax which = gde }
+                multiply_variable = { which = temp_prod which = gde }
+                multiply_variable = { which = temp_mp which = gde }
 
         		# slower for colonies (+50%)
                 if = {
@@ -222,15 +100,6 @@ country_event = {
                     multiply_variable = { which = temp_tax value = 0.5 }
                     multiply_variable = { which = temp_prod value = 0.5 }
                     multiply_variable = { which = temp_mp value = 0.5 }
-                }
-        		# slower for islands (+20%)
-                if = {
-                    limit = {
-                        island = yes
-                    }
-                    multiply_variable = { which = temp_tax value = 0.8 }
-                    multiply_variable = { which = temp_prod value = 0.8 }
-                    multiply_variable = { which = temp_mp value = 0.8 }
                 }
 
         		# if tradegood is wheat, fish, salt, then tax and manpower grow faster
@@ -247,157 +116,10 @@ country_event = {
                     multiply_variable = { which = temp_tax value = 1.1 }
                     multiply_variable = { which = temp_mp value = 1.2 }
                 }
-        		# if tradegood is cloth or cotton, apparently everything grows faster
-                if = {
-                    limit = {
-                        OR = {
-                            trade_goods = cloth
-                            trade_goods = cotton
-                        }
-                    }
-                    multiply_variable = { which = temp_tax value = 1.1 }
-                    multiply_variable = { which = temp_prod value = 1.1 }
-                    multiply_variable = { which = temp_mp value = 1.1 }
-                }
 
-#                set_variable = { which = log6 which = temp_tax }
-
-        		# now for the terrain
-                # I hate you, paradox. couldnt you just make local_development_cost accessible? ffs...
-
-                trigger_switch = {
-                    on_trigger = has_terrain
-                        farmlands = {
-                            multiply_variable = { which = temp_tax value = 1.05 }
-                            multiply_variable = { which = temp_prod value = 1.05 }
-                            multiply_variable = { which = temp_mp value = 1.05 }
-                        }
-                        drylands = {
-                            multiply_variable = { which = temp_tax value = 0.95 }
-                            multiply_variable = { which = temp_prod value = 0.95 }
-                            multiply_variable = { which = temp_mp value = 0.95 }
-                        }
-                        woods = {
-                            multiply_variable = { which = temp_tax value = 0.85 }
-                            multiply_variable = { which = temp_prod value = 0.85 }
-                            multiply_variable = { which = temp_mp value = 0.85 }
-                        }
-                        savannah = {
-                            multiply_variable = { which = temp_tax value = 0.85 }
-                            multiply_variable = { which = temp_prod value = 0.85 }
-                            multiply_variable = { which = temp_mp value = 0.85 }
-                        }
-                        forest = {
-                            multiply_variable = { which = temp_tax value = 0.8 }
-                            multiply_variable = { which = temp_prod value = 0.8 }
-                            multiply_variable = { which = temp_mp value = 0.8 }
-                        }
-                        steppe = {
-                            multiply_variable = { which = temp_tax value = 0.8 }
-                            multiply_variable = { which = temp_prod value = 0.8 }
-                            multiply_variable = { which = temp_mp value = 0.8 }
-                        }
-                        highlands = {
-                            multiply_variable = { which = temp_tax value = 0.8 }
-                            multiply_variable = { which = temp_prod value = 0.8 }
-                            multiply_variable = { which = temp_mp value = 0.8 }
-                        }
-                        coastal_desert = {
-                            multiply_variable = { which = temp_tax value = 0.75 }
-                            multiply_variable = { which = temp_prod value = 0.75 }
-                            multiply_variable = { which = temp_mp value = 0.75 }
-                        }
-                        coastline = {
-                            multiply_variable = { which = temp_tax value = 0.75 }
-                            multiply_variable = { which = temp_prod value = 0.75 }
-                            multiply_variable = { which = temp_mp value = 0.75 }
-                        }
-                        hills = {
-                            multiply_variable = { which = temp_tax value = 0.75 }
-                            multiply_variable = { which = temp_prod value = 0.75 }
-                            multiply_variable = { which = temp_mp value = 0.75 }
-                        }
-                        marsh = {
-                            multiply_variable = { which = temp_tax value = 0.75 }
-                            multiply_variable = { which = temp_prod value = 0.75 }
-                            multiply_variable = { which = temp_mp value = 0.75 }
-                        }
-                        desert = {
-                            multiply_variable = { which = temp_tax value = 0.65 }
-                            multiply_variable = { which = temp_prod value = 0.65 }
-                            multiply_variable = { which = temp_mp value = 0.65 }
-                        }
-                        jungle = {
-                            multiply_variable = { which = temp_tax value = 0.65 }
-                            multiply_variable = { which = temp_prod value = 0.65 }
-                            multiply_variable = { which = temp_mp value = 0.65 }
-                        }
-                        mountain = {
-                            multiply_variable = { which = temp_tax value = 0.5 }
-                            multiply_variable = { which = temp_prod value = 0.5 }
-                            multiply_variable = { which = temp_mp value = 0.5 }
-                        }
-                        glacier = {
-                            multiply_variable = { which = temp_tax value = 0.5 }
-                            multiply_variable = { which = temp_prod value = 0.5 }
-                            multiply_variable = { which = temp_mp value = 0.5 }
-                        }
-                }
-
-                trigger_switch = {
-                    on_trigger = has_climate
-                        arid = {
-                            multiply_variable = { which = temp_tax value = 0.85 }
-                            multiply_variable = { which = temp_prod value = 0.85 }
-                            multiply_variable = { which = temp_mp value = 0.85 }
-                        }
-                        tropical = {
-                            multiply_variable = { which = temp_tax value = 0.85 }
-                            multiply_variable = { which = temp_prod value = 0.85 }
-                            multiply_variable = { which = temp_mp value = 0.85 }
-                        }
-                        arctic = {
-                            multiply_variable = { which = temp_tax value = 0.5 }
-                            multiply_variable = { which = temp_prod value = 0.5 }
-                            multiply_variable = { which = temp_mp value = 0.5 }
-                        }
-                }
-
-                set_variable = { which = temp value = 1 }
-
-                trigger_switch = {
-                    on_trigger = has_province_modifier
-                        forest_clearance = {
-                            set_variable = { which = temp value = 1.15 }
-                        }
-                        farms = {
-                            set_variable = { which = temp value = 1.05 }
-                        }
-                        land_reclamation = {
-                            set_variable = { which = temp value = 1.25 }
-                        }
-                        coastline_improved = {
-                            set_variable = { which = temp value = 1.25 }
-                        }
-                        hills_improved = {
-                            set_variable = { which = temp value = 1.25 }
-                        }
-                        slash_and_burn = {
-                            set_variable = { which = temp value = 1.2 }
-                        }
-                        irrigation = {
-                            set_variable = { which = temp value = 1.1 }
-                        }
-                        terrace = {
-                            set_variable = { which = temp value = 1.1 }
-                        }
-                }
                 multiply_variable = { which = temp_tax which = temp }
                 multiply_variable = { which = temp_prod which = temp }
                 multiply_variable = { which = temp_mp which = temp }
-
-#                set_variable = { which = log7 which = temp_tax }
-
 
         		# faster when taxation/production/manpower boosts are active
                 if = {
@@ -596,16 +318,13 @@ country_event = {
                     multiply_variable = { which = temp_mp value = 1.2 }
                 }
 
-#                set_variable = { which = log8 which = temp_tax }
-
-                # university gets -50% bonus
                 if = {
                     limit = {
                         has_building = university
                     }
-                    multiply_variable = { which = temp_tax value = 1.5 }
-                    multiply_variable = { which = temp_prod value = 1.5 }
-                    multiply_variable = { which = temp_mp value = 1.5 }
+                    multiply_variable = { which = temp_tax value = 1.3 }
+                    multiply_variable = { which = temp_prod value = 1.3 }
+                    multiply_variable = { which = temp_mp value = 1.3 }
                 }
 
 
@@ -613,22 +332,20 @@ country_event = {
 
             # slower with unrest
             # unrest is a special case. it can lead to negative growth
-            # formula: if unrest is >= 0.5, then add (-1.5 * unrest - 1.5) to the progress
+            # formula: if unrest is >= 0.5, then add (-1 * unrest - 1.5) to the progress
             # since we multiply flat growth and bonuses before we subtract a flat unrest penalty,  it is possible
             # to "power through" unrest later on in the game and have growing development despite unrest
                 if = {
                     limit = {
             			unrest = 0.5
                     }
-                    set_variable = { which = temp value = -1.5 }
+                    set_variable = { which = temp value = -1.2 }
                     multiply_variable = { which = temp which = unrest }
                     subtract_variable = { which = temp value = 1.5 }
                     change_variable = { which = temp_tax which = temp }
                     change_variable = { which = temp_prod which = temp }
                     change_variable = { which = temp_mp which = temp }
                 }
-
-#                set_variable = { which = log9 which = temp_tax }
 
         ###### finally done! ######
 
@@ -687,11 +404,14 @@ country_event = {
                     change_variable = { which = manpower_progress value = 100 }
                 }
 
-        # set all unneeded variables to 0. Not sure this is helpful. No way to remove variables?
+        # set all unneeded variables to 0 so they don't appear in the save game files
                     set_variable = { which = temp_tax value = 0 }
                     set_variable = { which = temp_prod value = 0 }
                     set_variable = { which = temp_mp value = 0 }
                     set_variable = { which = temp value = 0 }
+                    #set_variable = { which = ldc value = 0 }
+                    #set_variable = { which = gdc value = 0 }
+                    #set_variable = { which = gde value = 0 }
 
         # NOW we're done... phew
             }
