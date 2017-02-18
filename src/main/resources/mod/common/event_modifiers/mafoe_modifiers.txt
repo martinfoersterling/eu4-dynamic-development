@@ -65,6 +65,7 @@ facilitate_conquest = {
 
 facilitate_buildings = {
 	build_cost = -0.5
+	build_time = -0.5
 }
 
 province_is_integrating = {

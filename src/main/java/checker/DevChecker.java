@@ -10,7 +10,7 @@ public class DevChecker {
 
     public static void main(String[] args) {
 
-        calc("Paris", 11,
+        calc("Paris perfekt", 11,
                 flat_malus(),
                 dev_efficiency(),
                 cloth(),

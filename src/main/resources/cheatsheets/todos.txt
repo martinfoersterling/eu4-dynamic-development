@@ -1,10 +1,8 @@
 
-- desert gaining dev too fast
 - decent icons for province modifiers
 - balancing terraforming
-- dynamic coring
 - dynamic culture??
-- add more administrative efficiency OR implement dynamic coring
-- make buildings cheaper and reduce build time
-- make manually improving dev cheap again because I cba to handle all development cost bonuses
-- terraforming events never happen
+- increase dev efficiency bonus to account for faster growth?
+- had to put back in scaled dev cost per point of dev so raising dev manually wouldnt be too cheap
+       ---> but that increase needs to be removed from ldc within the calculation
+       ---> formulae is "+3% per point above 10 total development, goes up by 3 every 10 total development"

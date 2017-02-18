@@ -83,3 +83,7 @@
  wont_translate.title:0 "No translation"
  wont_translate.desc:0 "No translation"
  wont_translate:0 "No translation"
+
+ cb_paintmap: "Paint the Map"
+ cb_paintmap_desc: "The map must be painted!"
+ PAINT_PROVINCES_WAR_NAME:0 "$ORDER$$FIRST$-$SECOND$ Map Painting War"
