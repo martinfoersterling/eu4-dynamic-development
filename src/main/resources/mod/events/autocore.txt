@@ -19,6 +19,14 @@ province_event = {
 	option = {
 	    name = "wont_translate"
 
+# none of this works......... grrrrrrrrrrrrrrrrrrrrrrrrrrrrrr............
+#        export_to_variable = { which = lcc value = local_core_creation }
+#        export_to_variable = { which = lccr value = local_core_creation who = FROM }
+#        export_to_variable = { which = cc value = core_creation }
+#        export_to_variable = { which = ccr value = core_creation who = ROOT }
+#        export_to_variable = { which = ecc value = enemy_core_creation }
+#        export_to_variable = { which = eccr value = enemy_core_creation who = PREV }
+
         if = {
             limit = {
                 NOT = { is_core = owner }

@@ -1,10 +1,7 @@
 
-- decent icons for province modifiers
 - negative dev growth from looting and blockading and sieging
-- balancing terraforming
 - make autocoring cost money?
+- autocoring should take longer if there are coring cost penalties present, and shorter if bonus
 - dynamic culture??
 - increase dev efficiency bonus to account for faster growth?
-- had to put back in scaled dev cost per point of dev so raising dev manually wouldnt be too cheap
-       ---> but that increase needs to be removed from ldc within the calculation
-       ---> formulae is "+3% per point above 10 total development, goes up by 3 every 10 total development"
+- introduce terraforming for all terrain types

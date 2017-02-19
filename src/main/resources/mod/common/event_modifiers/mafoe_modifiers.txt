@@ -18,39 +18,46 @@ forest_clearance = {
 farms = {
     local_development_cost = -0.05
     supply_limit = 0.333333333333333333333333333
+    picture = "rr_royalists_influence"
 }
 
 land_reclamation = {
     local_development_cost = -0.25
     supply_limit = 0.666666666666666666666666666
     allowed_num_of_buildings = 1
+    picture = "rr_girondists_influence"
 }
 
 coastline_improved = {
     local_development_cost = -0.25
     supply_limit = 0.333333333333333333333333333
     allowed_num_of_buildings = 1
+    picture = "rr_jacobins_influence"
 }
 
 hills_improved = {
     local_development_cost = -0.25
     supply_limit = 0.333333333333333333333333333
     allowed_num_of_buildings = 1
+    picture = "rr_jacobins_influence"
 }
 
 slash_and_burn = {
     local_development_cost = -0.2
     supply_limit = 0.166666666666666666666666666
+    picture = "rr_jacobins_influence"
 }
 
 irrigation = {
     local_development_cost = -0.1
     supply_limit = 0.166666666666666666666666666
+    picture = "rr_girondists_influence"
 }
 
 terrace = {
     local_development_cost = -0.1
     supply_limit = 0.166666666666666666666666666
+    picture = "rr_girondists_influence"
 }
 
 stunt_island_growth = {
@@ -74,5 +81,5 @@ province_is_integrating = {
    	local_production_efficiency = -2
    	province_trade_power_modifier = -2
     local_manpower_modifier = -2
-	local_autonomy = 0.1
+	local_autonomy = 0.2
 }
