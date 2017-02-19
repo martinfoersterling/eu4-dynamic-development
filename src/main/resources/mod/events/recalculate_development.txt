@@ -28,6 +28,95 @@ country_event = {
                 # gdc is usually between -1 (great) and 1 (bad), so let's negate and add 1
                 multiply_variable = { which = gdc value = -1 }
                 change_variable = { which = gdc value = 1 }
+        # counter the lovely scaled development effect that adds ldc depending on how high dev is
+        # this allows us to still have increasing development cost for manual development (clicking the button), while
+        #  NOT having the dynamic dev growth be stunted by the scaled dev cost
+                if = {
+                    # only apply formula at dev 10 or more
+                    limit = {
+                        development = 10
+                    }
+                    export_to_variable = { which = dev value = development }
+
+                    set_variable = { which = temp which = dev }
+                    subtract_variable = { which = temp value = 9 }
+                    multiply_variable = { which = temp value = 0.03 }
+                    change_variable = { which = scaled_dev_malus which = temp }
+                    if = { limit = { development = 20 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 19 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 30 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 29 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 40 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 39 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 50 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 49 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 60 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 59 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 70 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 69 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 80 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 79 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 90 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 89 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 100 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 99 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    if = { limit = { development = 110 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 109 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+                    # don't account for higher dev cause I cba
+                    if = { limit = { development = 120 }
+                        set_variable = { which = temp which = dev }
+                        subtract_variable = { which = temp value = 119 }
+                        multiply_variable = { which = temp value = 0.03 }
+                        change_variable = { which = scaled_dev_malus which = temp }
+                    }
+
+                    #finally add our calculated value to the ldc to counter the scaled dev malus in the ldc
+                    change_variable = { which = ldc which = scaled_dev_malus }
+                    # remove temp variables
+                    set_variable = { which = scaled_dev_malus value = 0 }
+                    set_variable = { which = dev value = 0 }
+                    set_variable = { which = temp value = 0 }
+                }
 
         # can't grab development efficiency for some reason, so this gotta do
         # has 3 tiers from all 3 tech, each is 0.1 or 10%, at tech 17, 23, 27
