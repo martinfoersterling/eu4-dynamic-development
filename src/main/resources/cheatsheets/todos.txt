@@ -5,3 +5,4 @@
 - dynamic culture??
 - increase dev efficiency bonus to account for faster growth?
 - introduce terraforming for all terrain types
+- upload mod to workshop
