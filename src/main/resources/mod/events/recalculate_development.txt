@@ -270,31 +270,31 @@ country_event = {
                     limit = {
             			has_building = workshop
                     }
-                    multiply_variable = { which = temp_prod value = 1.1 }
+                    multiply_variable = { which = temp_prod value = 1.2 }
                 }
                 if = {
                     limit = {
             			has_building = counting_house
                     }
-                    multiply_variable = { which = temp_prod value = 1.2 }
+                    multiply_variable = { which = temp_prod value = 1.4 }
                 }
                 if = {
                     limit = {
             			has_building = marketplace
                     }
-                    multiply_variable = { which = temp_prod value = 1.1 }
+                    multiply_variable = { which = temp_prod value = 1.2 }
                 }
                 if = {
                     limit = {
             			has_building = trade_depot
                     }
-                    multiply_variable = { which = temp_prod value = 1.2 }
+                    multiply_variable = { which = temp_prod value = 1.4 }
                 }
                 if = {
                     limit = {
             			has_building = stock_exchange
                     }
-                    multiply_variable = { which = temp_prod value = 1.3 }
+                    multiply_variable = { which = temp_prod value = 1.6 }
                 }
 
                 # ...manufactories third...
@@ -302,31 +302,31 @@ country_event = {
                     limit = {
             			has_building = wharf
                     }
-                    multiply_variable = { which = temp_prod value = 1.3 }
+                    multiply_variable = { which = temp_prod value = 1.6 }
                 }
                 if = {
                     limit = {
             			has_building = weapons
                     }
-                    multiply_variable = { which = temp_prod value = 1.3 }
+                    multiply_variable = { which = temp_prod value = 1.6 }
                 }
                 if = {
                     limit = {
             			has_building = textile
                     }
-                    multiply_variable = { which = temp_prod value = 1.3 }
+                    multiply_variable = { which = temp_prod value = 1.6 }
                 }
                 if = {
                     limit = {
             			has_building = plantations
                     }
-                    multiply_variable = { which = temp_prod value = 1.3 }
+                    multiply_variable = { which = temp_prod value = 1.6 }
                 }
                 if = {
                     limit = {
             			has_building = tradecompany
                     }
-                    multiply_variable = { which = temp_prod value = 1.3 }
+                    multiply_variable = { which = temp_prod value = 1.6 }
                 }
 
                 # ...military buildings fourth... (kill me nao!)
@@ -334,49 +334,49 @@ country_event = {
                     limit = {
             			has_building = barracks
                     }
-                    multiply_variable = { which = temp_mp value = 1.08 }
+                    multiply_variable = { which = temp_mp value = 1.2 }
                 }
                 if = {
                     limit = {
             			has_building = training_fields
                     }
-                    multiply_variable = { which = temp_mp value = 1.08 }
+                    multiply_variable = { which = temp_mp value = 1.4 }
                 }
                 if = {
                     limit = {
             			has_building = regimental_camp
                     }
-                    multiply_variable = { which = temp_mp value = 1.16 }
+                    multiply_variable = { which = temp_mp value = 1.2 }
                 }
                 if = {
                     limit = {
             			has_building = conscription_center
                     }
-                    multiply_variable = { which = temp_mp value = 1.16 }
+                    multiply_variable = { which = temp_mp value = 1.4 }
                 }
                 if = {
                     limit = {
             			has_building = shipyard
                     }
-                    multiply_variable = { which = temp_mp value = 1.08 }
+                    multiply_variable = { which = temp_mp value = 1.2 }
                 }
                 if = {
                     limit = {
             			has_building = dock
                     }
-                    multiply_variable = { which = temp_mp value = 1.08 }
+                    multiply_variable = { which = temp_mp value = 1.2 }
                 }
                 if = {
                     limit = {
             			has_building = grand_shipyard
                     }
-                    multiply_variable = { which = temp_mp value = 1.16 }
+                    multiply_variable = { which = temp_mp value = 1.4 }
                 }
                 if = {
                     limit = {
             			has_building = drydock
                     }
-                    multiply_variable = { which = temp_mp value = 1.16 }
+                    multiply_variable = { which = temp_mp value = 1.4 }
                 }
 
                 # ...and forts last.
@@ -384,25 +384,25 @@ country_event = {
                     limit = {
             			has_building = fort_15th
                     }
-                    multiply_variable = { which = temp_mp value = 1.05 }
+                    multiply_variable = { which = temp_mp value = 1.2 }
                 }
                 if = {
                     limit = {
             			has_building = fort_16th
                     }
-                    multiply_variable = { which = temp_mp value = 1.1 }
+                    multiply_variable = { which = temp_mp value = 1.3 }
                 }
                 if = {
                     limit = {
             			has_building = fort_17th
                     }
-                    multiply_variable = { which = temp_mp value = 1.15 }
+                    multiply_variable = { which = temp_mp value = 1.4 }
                 }
                 if = {
                     limit = {
             			has_building = fort_18th
                     }
-                    multiply_variable = { which = temp_mp value = 1.2 }
+                    multiply_variable = { which = temp_mp value = 1.5 }
                 }
 
                 if = {
